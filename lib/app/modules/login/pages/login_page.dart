@@ -22,10 +22,6 @@ class _LoginPageState extends State<LoginPage> {
         builder: (context, _) {
           final state = controller.state;
 
-          if (state is LoginLoadingState) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(

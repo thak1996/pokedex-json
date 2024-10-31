@@ -50,3 +50,32 @@ class APIException extends Failure {
     }
   }
 }
+
+class AuthException extends APIException {
+  const AuthException({
+    required super.code,
+    required super.textCode,
+  });
+
+  static const authenticationRequired = AuthException(
+    code: 401,
+    textCode: 'authentication-required',
+  );
+
+  static const tokenExpired = AuthException(
+    code: 401,
+    textCode: 'token-expired',
+  );
+
+  @override
+  String get message {
+    switch (textCode) {
+      case 'authentication-required':
+        return 'Autenticação necessária para acessar este recurso';
+      case 'token-expired':
+        return 'Sua sessão expirou, por favor faça login novamente';
+      default:
+        return super.message;
+    }
+  }
+}

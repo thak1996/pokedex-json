@@ -20,16 +20,19 @@ class LoginController extends ChangeNotifier {
   
   Future<void> executeLogin() async {
     changeState(const LoginLoadingState());
-    try {
-      final email = emailController.text;
-      final password = passwordController.text;
-      
-      await _authService.login(email: email, password: password);
-      changeState(const LoginSuccessState());
-      await Modular.to.pushReplacementNamed('/home');
-    } catch (err) {
-      changeState(LoginErrorState(err.toString()));
-    }
+    
+    final result = await _authService.login(
+      email: emailController.text,
+      password: passwordController.text,
+    );
+    
+    result.fold(
+      (error) => changeState(LoginErrorState(error.message)),
+      (token) async {
+        changeState(const LoginSuccessState());
+        await Modular.to.pushReplacementNamed('/home');
+      },
+    );
   }
   
   @override

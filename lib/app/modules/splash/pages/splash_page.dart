@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import '../controllers/splash_controller.dart';
-import '../states/splash_state.dart';
+import 'package:integration/app/modules/splash/controllers/splash_controller.dart';
+import 'package:integration/app/modules/splash/states/splash_state.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -26,7 +26,6 @@ class _SplashPageState extends State<SplashPage> {
         listenable: controller,
         builder: (context, _) {
           final state = controller.state;
-          
           if (state is SplashErrorState) {
             return Center(
               child: Text(
@@ -35,7 +34,6 @@ class _SplashPageState extends State<SplashPage> {
               ),
             );
           }
-          
           return const Center(
             child: CircularProgressIndicator(),
           );
@@ -43,4 +41,4 @@ class _SplashPageState extends State<SplashPage> {
       ),
     );
   }
-} 
+}

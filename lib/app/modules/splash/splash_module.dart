@@ -6,8 +6,9 @@ import 'pages/splash_page.dart';
 class SplashModule extends Module {
   @override
   void binds(Injector i) {
-    i.addLazySingleton<AuthService>(() => AuthService());
-    i.addLazySingleton<SplashController>(() => SplashController(i()));
+    i.addLazySingleton<SplashController>(
+        () => SplashController(i<AuthService>()));
+    i.addLazySingleton<AuthService>(AuthService.new);
   }
 
   @override
