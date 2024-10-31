@@ -1,16 +1,28 @@
 import 'package:flutter/material.dart';
+import '../states/home_state.dart';
 
 class HomeController extends ChangeNotifier {
-  int _counter = 0;
-  int get counter => _counter;
+  HomeState _state = const HomeInitialState();
+  HomeState get state => _state;
+
+  int get counter => (_state as HomeInitialState).counter;
+
+  void changeState(HomeState newState) {
+    _state = newState;
+    notifyListeners();
+  }
 
   void incrementCounter() {
-    _counter++;
-    notifyListeners();
+    if (_state is HomeInitialState) {
+      final currentState = _state as HomeInitialState;
+      changeState(HomeInitialState(counter: currentState.counter + 1));
+    }
   }
 
   void decrementCounter() {
-    _counter--;
-    notifyListeners();
+    if (_state is HomeInitialState) {
+      final currentState = _state as HomeInitialState;
+      changeState(HomeInitialState(counter: currentState.counter - 1));
+    }
   }
-} 
+}
