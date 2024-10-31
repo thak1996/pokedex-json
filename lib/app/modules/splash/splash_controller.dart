@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:integration/app/core/services/auth_service.dart';
-import 'package:integration/app/modules/splash/states/splash_state.dart';
+import 'package:integration/app/modules/splash/splash_state.dart';
 
 class SplashController extends ChangeNotifier {
   SplashController(this._authService);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../states/home_state.dart';
+import 'home_state.dart';
 
 class HomeController extends ChangeNotifier {
   HomeState _state = const HomeInitialState();

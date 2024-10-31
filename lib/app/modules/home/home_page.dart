@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:integration/app/core/theme/app_text_styles.dart';
-import 'package:integration/app/modules/home/controllers/home_controller.dart';
+import 'package:integration/app/modules/home/home_controller.dart';
 import 'package:integration/app/core/theme/widgets/theme_switch_button.dart';
 
 class HomePage extends StatefulWidget {

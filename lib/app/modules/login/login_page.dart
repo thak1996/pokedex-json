@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import '../controllers/login_controller.dart';
-import '../states/login_state.dart';
+import 'package:integration/app/modules/login/login_state.dart';
+import 'login_controller.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -12,6 +12,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final LoginController controller = Modular.get<LoginController>();
+
   final _formKey = GlobalKey<FormState>();
 
   @override

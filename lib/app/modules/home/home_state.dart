@@ -14,4 +14,4 @@ class HomeLoadingState extends HomeState {
 class HomeErrorState extends HomeState {
   final String message;
   const HomeErrorState(this.message);
-} 
+}

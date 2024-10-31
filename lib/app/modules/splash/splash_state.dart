@@ -15,6 +15,7 @@ class SplashSuccessState extends SplashState {
 }
 
 class SplashErrorState extends SplashState {
-  final String message;
   const SplashErrorState(this.message);
-} 
+
+  final String message;
+}

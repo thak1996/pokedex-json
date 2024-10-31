@@ -8,8 +8,8 @@ import 'modules/splash/splash_module.dart';
 class AppModule extends Module {
   @override
   void binds(Injector i) {
-    i.addLazySingleton<ThemeController>(ThemeController.new);
-    i.addLazySingleton<AuthService>(AuthService.new);
+    i.addLazySingleton(ThemeController.new);
+    i.addLazySingleton(AuthService.new);
   }
 
   @override
