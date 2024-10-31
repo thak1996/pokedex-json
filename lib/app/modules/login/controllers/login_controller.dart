@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import '../states/login_state.dart';
-import '../services/login_service.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import '../../../core/services/auth_service.dart';
+import '../states/login_state.dart';
 
 class LoginController extends ChangeNotifier {
-  final LoginService _loginService;
+  final AuthService _authService;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   
   LoginState _state = const LoginInitialState();
   LoginState get state => _state;
   
-  LoginController(this._loginService);
+  LoginController(this._authService);
   
   void changeState(LoginState newState) {
     _state = newState;
@@ -24,7 +24,7 @@ class LoginController extends ChangeNotifier {
       final email = emailController.text;
       final password = passwordController.text;
       
-      await _loginService.login(email: email, password: password);
+      await _authService.login(email: email, password: password);
       changeState(const LoginSuccessState());
       await Modular.to.pushReplacementNamed('/home');
     } catch (err) {

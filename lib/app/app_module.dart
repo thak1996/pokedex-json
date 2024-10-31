@@ -1,4 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'core/services/auth_service.dart';
 import 'core/theme/theme_controller.dart';
 import 'modules/home/home_module.dart';
 import 'modules/login/login_module.dart';
@@ -8,6 +9,7 @@ class AppModule extends Module {
   @override
   void binds(Injector i) {
     i.addLazySingleton<ThemeController>(ThemeController.new);
+    i.addLazySingleton<AuthService>(AuthService.new);
   }
 
   @override
