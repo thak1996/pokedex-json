@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:integration/app/modules/login/login_state.dart';
 import 'login_controller.dart';
 
@@ -24,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
           final state = controller.state;
 
           return Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(16.r),
             child: Form(
               key: _formKey,
               child: Column(
@@ -43,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   TextFormField(
                     controller: controller.passwordController,
                     decoration: const InputDecoration(
@@ -58,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
@@ -69,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   if (state is LoginErrorState)
                     Padding(
-                      padding: const EdgeInsets.only(top: 16),
+                      padding: EdgeInsets.only(top: 16.h),
                       child: Text(
                         state.message,
                         style: const TextStyle(color: Colors.red),

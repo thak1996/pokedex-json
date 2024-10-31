@@ -3,15 +3,19 @@ abstract class HomeState {
 }
 
 class HomeInitialState extends HomeState {
-  final int counter;
-  const HomeInitialState({this.counter = 0});
+  const HomeInitialState();
 }
 
 class HomeLoadingState extends HomeState {
   const HomeLoadingState();
 }
 
+class HomeSuccessState extends HomeState {
+  const HomeSuccessState();
+}
+
 class HomeErrorState extends HomeState {
-  final String message;
   const HomeErrorState(this.message);
+
+  final String message;
 }

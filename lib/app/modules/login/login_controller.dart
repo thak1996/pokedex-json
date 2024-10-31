@@ -36,7 +36,7 @@ class LoginController extends ChangeNotifier {
       (error) => changeState(LoginErrorState(error.message)),
       (token) async {
         changeState(const LoginSuccessState());
-        await Modular.to.pushReplacementNamed('/home');
+        await Modular.to.pushReplacementNamed('/home/');
       },
     );
   }

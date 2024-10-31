@@ -4,8 +4,9 @@ import 'home_state.dart';
 class HomeController extends ChangeNotifier {
   HomeState _state = const HomeInitialState();
   HomeState get state => _state;
-
-  int get counter => (_state as HomeInitialState).counter;
+  
+  int _counter = 0;
+  int get counter => _counter;
 
   void changeState(HomeState newState) {
     _state = newState;
@@ -13,16 +14,12 @@ class HomeController extends ChangeNotifier {
   }
 
   void incrementCounter() {
-    if (_state is HomeInitialState) {
-      final currentState = _state as HomeInitialState;
-      changeState(HomeInitialState(counter: currentState.counter + 1));
-    }
+    _counter++;
+    notifyListeners();
   }
 
   void decrementCounter() {
-    if (_state is HomeInitialState) {
-      final currentState = _state as HomeInitialState;
-      changeState(HomeInitialState(counter: currentState.counter - 1));
-    }
+    _counter--;
+    notifyListeners();
   }
 }

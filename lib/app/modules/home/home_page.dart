@@ -47,12 +47,14 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: EdgeInsets.only(right: 10.w),
             child: FloatingActionButton(
+              heroTag: 'decrement',
               onPressed: controller.decrementCounter,
               tooltip: 'Decrement',
               child: const Icon(Icons.remove),
             ),
           ),
           FloatingActionButton(
+            heroTag: 'increment',
             onPressed: controller.incrementCounter,
             tooltip: 'Increment',
             child: const Icon(Icons.add),

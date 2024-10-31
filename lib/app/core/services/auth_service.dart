@@ -25,8 +25,6 @@ class AuthService {
     required String password,
   }) async {
     try {
-      await Future.delayed(const Duration(seconds: 2));
-
       if (email != 'teste@teste.com' || password != '123456') {
         return DataResult.failure(
           const APIException(code: 401, textCode: 'invalid-credentials'),
