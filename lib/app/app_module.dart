@@ -12,6 +12,6 @@ class AppModule extends Module {
 
   @override
   void routes(RouteManager r) {
-    r.module('/home', module: HomeModule());
+    r.module('/', module: HomeModule());
   }
 }

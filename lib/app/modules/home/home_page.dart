@@ -1,45 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:integration/app/core/theme/app_text_styles.dart';
-import 'package:integration/app/modules/home/home_controller.dart';
-import 'package:integration/app/core/theme/widgets/theme_switch_button.dart';
+import 'package:integration/app/core/service/poke_service.dart';
+import 'package:provider/provider.dart';
+import 'home_controller.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final HomeController controller = Modular.get<HomeController>();
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        actions: const [ThemeSwitchButton()],
-        title: Text('Flutter Demo Home Page', style: AppTextStyles.titleText),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-              style: AppTextStyles.bodyText,
-            ),
-            AnimatedBuilder(
-              animation: controller,
-              builder: (context, child) => Text(
-                '${controller.loadPokemons()}',
-                style: AppTextStyles.headlineText,
+    return ChangeNotifierProvider(
+      create: (_) => HomeController(PokeService()),
+      builder: (context, child) {
+        final controller = context.watch<HomeController>();
+        return Scaffold(
+          appBar: AppBar(title: const Text('Pokémon List')),
+          body: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ElevatedButton(
+                  onPressed: controller.isLoading
+                      ? null
+                      : () => controller.fetchPokemons(),
+                  child: Text(controller.isLoading
+                      ? 'Carregando...'
+                      : 'Buscar Pokémons'),
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
+              Expanded(
+                child: controller.isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : controller.errorMessage != null
+                        ? Center(child: Text(controller.errorMessage!))
+                        : controller.pokemons == null
+                            ? const Center(
+                                child: Text(
+                                    'Clique no botão para carregar os pokémons'),
+                              )
+                            : ListView.builder(
+                                itemCount: controller.pokemons?.length ?? 0,
+                                itemBuilder: (context, index) {
+                                  final pokemon = controller.pokemons![index];
+                                  return ListTile(title: Text(pokemon['name']));
+                                },
+                              ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
