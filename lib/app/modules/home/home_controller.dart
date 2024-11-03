@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:integration/app/core/service/poke_service.dart';
+import 'package:integration/app/core/services/pokemon_service.dart';
 
 class HomeController extends ChangeNotifier {
-  final PokeService _pokeService;
+  final PokemonService _pokeService;
   List<dynamic>? pokemons;
   String? errorMessage;
   bool isLoading = false;
@@ -13,7 +13,7 @@ class HomeController extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
-    final result = await _pokeService.fetchPokemons(limit: limit, offset: offset);
+    final result = await _pokeService.getPokemons();
 
     result.fold(
       (failure) {
@@ -21,7 +21,7 @@ class HomeController extends ChangeNotifier {
         pokemons = null; // Limpa os dados
       },
       (data) {
-        pokemons = data; // Armazena os dados
+        pokemons = data.results; // Armazena os dados
         errorMessage = null; // Limpa a mensagem de erro
       },
     );
