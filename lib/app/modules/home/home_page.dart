@@ -33,9 +33,7 @@ class HomePage extends StatelessWidget {
                         : 'Buscar Pokémons'),
                   ),
                   const SizedBox(height: 16),
-                  Expanded(
-                    child: _buildContent(controller),
-                  ),
+                  Expanded(child: _buildContent(controller)),
                 ],
               ),
             ),
@@ -48,35 +46,31 @@ class HomePage extends StatelessWidget {
   Widget _buildContent(HomeController controller) {
     final state = controller.state;
 
-    if (state is HomeLoadingState) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }
+    switch (state.runtimeType) {
+      case const (HomeLoadingState):
+        return const Center(child: CircularProgressIndicator());
 
-    if (state is HomeErrorState) {
-      return Center(
-        child: Text(state.message),
-      );
-    }
+      case const (HomeErrorState):
+        return Center(child: Text((state as HomeErrorState).message));
 
-    if (state is HomeInitialState) {
-      return const Center(
-        child: Text('Clique no botão para carregar os pokémons'),
-      );
-    }
+      case const (HomeInitialState):
+        return const Center(
+            child: Text('Clique no botão para carregar os pokémons'));
 
-    final pokemons = controller.pokemons;
-    if (pokemons == null) return const SizedBox.shrink();
+      case const (HomeSuccessState):
+        final pokemons = controller.pokemons;
+        if (pokemons == null) return const SizedBox.shrink();
 
-    return ListView.builder(
-      itemCount: pokemons.length,
-      itemBuilder: (context, index) {
-        final pokemon = pokemons[index];
-        return ListTile(
-          title: Text(pokemon.name),
+        return ListView.builder(
+          itemCount: pokemons.length,
+          itemBuilder: (context, index) {
+            final pokemon = pokemons[index];
+            return ListTile(title: Text(pokemon.name));
+          },
         );
-      },
-    );
+
+      default:
+        return const SizedBox.shrink();
+    }
   }
 }

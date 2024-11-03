@@ -3,20 +3,15 @@ import 'package:integration/app/core/services/pokemon_service.dart';
 import 'home_state.dart';
 
 class HomeController extends ChangeNotifier {
-  final PokemonService _pokeService;
-  HomeState _state = const HomeInitialState();
-  
-  HomeState get state => _state;
-  List<dynamic>? get pokemons => _state is HomeSuccessState 
-      ? (_state as HomeSuccessState).pokemons 
-      : null;
-
   HomeController(this._pokeService);
 
-  void _changeState(HomeState newState) {
-    _state = newState;
-    notifyListeners();
-  }
+  final PokemonService _pokeService;
+  HomeState _state = const HomeInitialState();
+
+  HomeState get state => _state;
+
+  List<dynamic>? get pokemons =>
+      _state is HomeSuccessState ? (_state as HomeSuccessState).pokemons : null;
 
   Future<void> fetchPokemons({int limit = 20, int offset = 0}) async {
     _changeState(const HomeLoadingState());
@@ -27,5 +22,10 @@ class HomeController extends ChangeNotifier {
       (failure) => _changeState(HomeErrorState(failure.message)),
       (data) => _changeState(HomeSuccessState(data.results)),
     );
+  }
+
+  void _changeState(HomeState newState) {
+    _state = newState;
+    notifyListeners();
   }
 }
