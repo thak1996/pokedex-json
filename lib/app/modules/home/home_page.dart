@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:integration/app/core/services/pokemon_service.dart';
 import 'package:integration/app/core/theme/widgets/theme_switch_button.dart';
+import 'package:integration/app/modules/home/home_state.dart';
 import 'package:provider/provider.dart';
 import 'home_controller.dart';
 
@@ -24,10 +25,10 @@ class HomePage extends StatelessWidget {
               child: Column(
                 children: [
                   ElevatedButton(
-                    onPressed: controller.isLoading
+                    onPressed: controller.state is HomeLoadingState
                         ? null
                         : () => controller.fetchPokemons(),
-                    child: Text(controller.isLoading
+                    child: Text(controller.state is HomeLoadingState
                         ? 'Carregando...'
                         : 'Buscar Pokémons'),
                   ),
@@ -45,28 +46,33 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildContent(HomeController controller) {
-    if (controller.isLoading) {
+    final state = controller.state;
+
+    if (state is HomeLoadingState) {
       return const Center(
         child: CircularProgressIndicator(),
       );
     }
 
-    if (controller.errorMessage != null) {
+    if (state is HomeErrorState) {
       return Center(
-        child: Text(controller.errorMessage!),
+        child: Text(state.message),
       );
     }
 
-    if (controller.pokemons == null) {
+    if (state is HomeInitialState) {
       return const Center(
         child: Text('Clique no botão para carregar os pokémons'),
       );
     }
 
+    final pokemons = controller.pokemons;
+    if (pokemons == null) return const SizedBox.shrink();
+
     return ListView.builder(
-      itemCount: controller.pokemons!.length,
+      itemCount: pokemons.length,
       itemBuilder: (context, index) {
-        final pokemon = controller.pokemons![index];
+        final pokemon = pokemons[index];
         return ListTile(
           title: Text(pokemon.name),
         );

@@ -11,7 +11,9 @@ class HomeLoadingState extends HomeState {
 }
 
 class HomeSuccessState extends HomeState {
-  const HomeSuccessState();
+  const HomeSuccessState(this.pokemons);
+  
+  final List<dynamic> pokemons;
 }
 
 class HomeErrorState extends HomeState {

@@ -1,32 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:integration/app/core/services/pokemon_service.dart';
+import 'home_state.dart';
 
 class HomeController extends ChangeNotifier {
   final PokemonService _pokeService;
-  List<dynamic>? pokemons;
-  String? errorMessage;
-  bool isLoading = false;
+  HomeState _state = const HomeInitialState();
+  
+  HomeState get state => _state;
+  List<dynamic>? get pokemons => _state is HomeSuccessState 
+      ? (_state as HomeSuccessState).pokemons 
+      : null;
 
   HomeController(this._pokeService);
 
-  Future<void> fetchPokemons({int limit = 20, int offset = 0}) async {
-    isLoading = true;
+  void _changeState(HomeState newState) {
+    _state = newState;
     notifyListeners();
+  }
+
+  Future<void> fetchPokemons({int limit = 20, int offset = 0}) async {
+    _changeState(const HomeLoadingState());
 
     final result = await _pokeService.getPokemons();
 
     result.fold(
-      (failure) {
-        errorMessage = failure.message; // Captura a mensagem de erro
-        pokemons = null; // Limpa os dados
-      },
-      (data) {
-        pokemons = data.results; // Armazena os dados
-        errorMessage = null; // Limpa a mensagem de erro
-      },
+      (failure) => _changeState(HomeErrorState(failure.message)),
+      (data) => _changeState(HomeSuccessState(data.results)),
     );
-
-    isLoading = false;
-    notifyListeners();
   }
 }
