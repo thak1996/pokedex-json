@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:integration/app/core/theme/app_text_styles.dart';
 import 'package:integration/app/modules/home/home_controller.dart';
 import 'package:integration/app/core/theme/widgets/theme_switch_button.dart';
@@ -34,32 +33,12 @@ class _HomePageState extends State<HomePage> {
             AnimatedBuilder(
               animation: controller,
               builder: (context, child) => Text(
-                '${controller.counter}',
+                '${controller.loadPokemons()}',
                 style: AppTextStyles.headlineText,
               ),
             ),
           ],
         ),
-      ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(right: 10.w),
-            child: FloatingActionButton(
-              heroTag: 'decrement',
-              onPressed: controller.decrementCounter,
-              tooltip: 'Decrement',
-              child: const Icon(Icons.remove),
-            ),
-          ),
-          FloatingActionButton(
-            heroTag: 'increment',
-            onPressed: controller.incrementCounter,
-            tooltip: 'Increment',
-            child: const Icon(Icons.add),
-          ),
-        ],
       ),
     );
   }

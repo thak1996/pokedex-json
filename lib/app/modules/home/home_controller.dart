@@ -1,25 +1,17 @@
 import 'package:flutter/material.dart';
-import 'home_state.dart';
+import 'package:integration/app/core/service/poke_service.dart';
 
 class HomeController extends ChangeNotifier {
-  HomeState _state = const HomeInitialState();
-  HomeState get state => _state;
-  
-  int _counter = 0;
-  int get counter => _counter;
+  final PokeService _pokeService;
 
-  void changeState(HomeState newState) {
-    _state = newState;
-    notifyListeners();
-  }
+  HomeController(this._pokeService);
 
-  void incrementCounter() {
-    _counter++;
-    notifyListeners();
-  }
-
-  void decrementCounter() {
-    _counter--;
-    notifyListeners();
+  Future<void> loadPokemons() async {
+    try {
+      final pokemons = await _pokeService.fetchPokemons();
+      // Faça algo com a lista de Pokémon
+    } catch (e) {
+      // Trate o erro
+    }
   }
 }

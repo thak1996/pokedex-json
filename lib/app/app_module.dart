@@ -1,21 +1,17 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'core/services/auth_service.dart';
+import 'package:integration/app/core/service/poke_service.dart';
 import 'core/theme/theme_controller.dart';
 import 'modules/home/home_module.dart';
-import 'modules/login/login_module.dart';
-import 'modules/splash/splash_module.dart';
 
 class AppModule extends Module {
   @override
   void binds(Injector i) {
-    i.addLazySingleton(ThemeController.new);
-    i.addLazySingleton(AuthService.new);
+    i.addLazySingleton<ThemeController>(ThemeController.new);
+    i.addLazySingleton<PokeService>(PokeService.new);
   }
 
   @override
   void routes(RouteManager r) {
-    r.module('/', module: SplashModule());
-    r.module('/login', module: LoginModule());
     r.module('/home', module: HomeModule());
   }
 }
