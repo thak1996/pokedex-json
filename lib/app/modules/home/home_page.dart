@@ -1,15 +1,75 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:integration/app/core/models/pokemon_model.dart';
 import 'package:integration/app/core/theme/app_text_styles.dart';
+import 'package:integration/app/core/theme/theme_controller.dart';
 import 'package:provider/provider.dart';
 import '../../core/services/pokemon_service.dart';
-import '../../core/theme/widgets/theme_switch_button.dart';
 import 'home_controller.dart';
 import 'home_state.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => HomeController(PokemonService(), ThemeController()),
+      builder: (context, child) {
+        final controller = context.watch<HomeController>();
+        return Scaffold(
+          drawer: const Drawer(),
+          body: Stack(
+            children: [
+              Positioned(
+                top: -105.h,
+                right: -85.w,
+                child: ColorFiltered(
+                  colorFilter: ColorFilter.mode(
+                    controller.themeController.themeMode == ThemeMode.dark
+                        ? Colors.white
+                        : Colors.white,
+                    BlendMode.srcIn,
+                  ),
+                  child: Image.asset(
+                    'assets/images/pokeball.png',
+                    height: 300.h,
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 25.h,
+                right: 24.w,
+                child: Builder(
+                  builder: (context) => IconButton(
+                    icon: Icon(
+                      Icons.menu,
+                      size: 30,
+                      color:
+                          controller.themeController.themeMode == ThemeMode.dark
+                              ? Colors.white
+                              : Colors.black,
+                    ),
+                    onPressed: () => Scaffold.of(context).openDrawer(),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 200.h),
+                child: SafeArea(
+                  child: Column(
+                    children: [Expanded(child: _buildContent(controller))],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   Widget _buildContent(HomeController controller) {
     final state = controller.state;
@@ -20,7 +80,6 @@ class HomePage extends StatelessWidget {
         return Center(child: Text((state as HomeErrorState).message));
       case const (HomeSuccessState):
         final pokemons = controller.pokemons;
-        if (pokemons == null) return const SizedBox.shrink();
         return GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -30,7 +89,7 @@ class HomePage extends StatelessWidget {
           itemBuilder: (context, index) {
             final pokemon = pokemons[index];
             final typesOne = pokemon.type.first;
-            final typesTwo = pokemon.type.length > 1 ? pokemon.type[1] : '';
+            final typesTwo = pokemon.type.length > 1 ? pokemon.type[1] : null;
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 8.w),
               child: Container(
@@ -40,74 +99,11 @@ class HomePage extends StatelessWidget {
                 ),
                 child: Stack(
                   children: [
-                    imgPokeball(),
-                    Positioned(
-                      right: 5.w,
-                      bottom: 0.h,
-                      child: CachedNetworkImage(
-                        imageUrl: pokemon.img,
-                        height: 100.h,
-                        fit: BoxFit.fitHeight,
-                      ),
-                    ),
-                    Positioned(
-                      top: 20.h,
-                      left: 10.w,
-                      child: Text(
-                        pokemon.name,
-                        style: AppTextStyles.titleText.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: 55.h,
-                      left: 10.w,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.r),
-                          color: Colors.black26,
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            left: 8.w,
-                            top: 4.h,
-                            bottom: 4.h,
-                            right: 8.w,
-                          ),
-                          child: Text(
-                            typesOne.toString(),
-                            style: AppTextStyles.bodyText.copyWith(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    if (typesTwo.isNotEmpty)
-                      Positioned(
-                        top: 90.h,
-                        left: 10.w,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.r),
-                            color: Colors.black26,
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              left: 8.w,
-                              top: 4.h,
-                              bottom: 4.h,
-                              right: 8.w,
-                            ),
-                            child: Text(
-                              typesTwo,
-                              style: AppTextStyles.bodyText
-                                  .copyWith(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ),
+                    imgPokeballCard(),
+                    imgPokemonCard(pokemon),
+                    titlePokemonCard(pokemon),
+                    typeOnePokemonCard(typesOne),
+                    if (typesTwo != null) typeTwoPokemonCard(typesTwo),
                   ],
                 ),
               ),
@@ -119,7 +115,7 @@ class HomePage extends StatelessWidget {
     }
   }
 
-  Positioned imgPokeball() {
+  Positioned imgPokeballCard() {
     return Positioned(
       bottom: -10.h,
       right: -10.w,
@@ -134,25 +130,82 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => HomeController(PokemonService()),
-      builder: (context, child) {
-        final controller = context.watch<HomeController>();
-        return Scaffold(
-          appBar: AppBar(actions: const [ThemeSwitchButton()]),
-          body: Stack(
-            children: [
-              SafeArea(
-                child: Column(
-                  children: [Expanded(child: _buildContent(controller))],
-                ),
-              ),
-            ],
+  Positioned imgPokemonCard(Pokemon pokemon) {
+    return Positioned(
+      right: 5.w,
+      bottom: 0.h,
+      child: CachedNetworkImage(
+        imageUrl: pokemon.img,
+        height: 100.h,
+        fit: BoxFit.fitHeight,
+      ),
+    );
+  }
+
+  Positioned titlePokemonCard(Pokemon pokemon) {
+    return Positioned(
+      top: 20.h,
+      left: 10.w,
+      child: Text(
+        pokemon.name,
+        style: AppTextStyles.titleText.copyWith(
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  Positioned typeOnePokemonCard(String typesOne) {
+    return Positioned(
+      top: 55.h,
+      left: 10.w,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.r),
+          color: Colors.black26,
+        ),
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: 8.w,
+            top: 4.h,
+            bottom: 4.h,
+            right: 8.w,
           ),
-        );
-      },
+          child: Text(
+            typesOne.toString(),
+            style: AppTextStyles.bodyText.copyWith(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Positioned typeTwoPokemonCard(String typesTwo) {
+    return Positioned(
+      top: 90.h,
+      left: 10.w,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.r),
+          color: Colors.black26,
+        ),
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: 8.w,
+            top: 4.h,
+            bottom: 4.h,
+            right: 8.w,
+          ),
+          child: Text(
+            typesTwo,
+            style: AppTextStyles.bodyText.copyWith(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

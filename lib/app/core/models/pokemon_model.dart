@@ -1,61 +1,28 @@
-class PokemonResponse {
-  final List<Pokemon> pokemon;
-
-  const PokemonResponse({required this.pokemon});
-
-  factory PokemonResponse.fromJson(Map<String, dynamic> json) {
-    final pokemonList = (json['pokemon'] as List)
-        .map((pokemon) => Pokemon.fromJson(pokemon))
-        .toList();
-    return PokemonResponse(pokemon: pokemonList);
+class Evolution {
+  factory Evolution.fromJson(Map<String, dynamic> json) {
+    return Evolution(
+      num: json['num'] as String,
+      name: json['name'] as String,
+    );
   }
+
+  const Evolution({
+    required this.num,
+    required this.name,
+  });
+
+  final String name;
+  final String num;
 
   Map<String, dynamic> toJson() {
     return {
-      'pokemon': pokemon.map((pokemon) => pokemon.toJson()).toList(),
+      'num': num,
+      'name': name,
     };
   }
 }
 
 class Pokemon {
-  final int id;
-  final String num;
-  final String name;
-  final String img;
-  final List<String> type;
-  final String height;
-  final String weight;
-  final String candy;
-  final int? candyCount;
-  final String egg;
-  final double spawnChance;
-  final double avgSpawns;
-  final String spawnTime;
-  final List<double>? multipliers;
-  final List<String> weaknesses;
-  final List<Evolution>? prevEvolution;
-  final List<Evolution>? nextEvolution;
-
-  const Pokemon({
-    required this.id,
-    required this.num,
-    required this.name,
-    required this.img,
-    required this.type,
-    required this.height,
-    required this.weight,
-    required this.candy,
-    this.candyCount,
-    required this.egg,
-    required this.spawnChance,
-    required this.avgSpawns,
-    required this.spawnTime,
-    this.multipliers,
-    required this.weaknesses,
-    this.prevEvolution,
-    this.nextEvolution,
-  });
-
   factory Pokemon.fromJson(Map<String, dynamic> json) {
     return Pokemon(
       id: json['id'] as int,
@@ -87,6 +54,44 @@ class Pokemon {
     );
   }
 
+  const Pokemon({
+    required this.id,
+    required this.num,
+    required this.name,
+    required this.img,
+    required this.type,
+    required this.height,
+    required this.weight,
+    required this.candy,
+    this.candyCount,
+    required this.egg,
+    required this.spawnChance,
+    required this.avgSpawns,
+    required this.spawnTime,
+    this.multipliers,
+    required this.weaknesses,
+    this.prevEvolution,
+    this.nextEvolution,
+  });
+
+  final double avgSpawns;
+  final String candy;
+  final int? candyCount;
+  final String egg;
+  final String height;
+  final int id;
+  final String img;
+  final List<double>? multipliers;
+  final String name;
+  final List<Evolution>? nextEvolution;
+  final String num;
+  final List<Evolution>? prevEvolution;
+  final double spawnChance;
+  final String spawnTime;
+  final List<String> type;
+  final List<String> weaknesses;
+  final String weight;
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -110,26 +115,21 @@ class Pokemon {
   }
 }
 
-class Evolution {
-  final String num;
-  final String name;
-
-  const Evolution({
-    required this.num,
-    required this.name,
-  });
-
-  factory Evolution.fromJson(Map<String, dynamic> json) {
-    return Evolution(
-      num: json['num'] as String,
-      name: json['name'] as String,
-    );
+class PokemonResponse {
+  factory PokemonResponse.fromJson(Map<String, dynamic> json) {
+    final pokemonList = (json['pokemon'] as List)
+        .map((pokemon) => Pokemon.fromJson(pokemon))
+        .toList();
+    return PokemonResponse(pokemon: pokemonList);
   }
+
+  const PokemonResponse({required this.pokemon});
+
+  final List<Pokemon> pokemon;
 
   Map<String, dynamic> toJson() {
     return {
-      'num': num,
-      'name': name,
+      'pokemon': pokemon.map((pokemon) => pokemon.toJson()).toList(),
     };
   }
 }

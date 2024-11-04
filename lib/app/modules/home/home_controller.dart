@@ -1,24 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:integration/app/core/theme/theme_controller.dart';
 import '../../core/models/pokemon_model.dart';
 import '../../core/services/pokemon_service.dart';
 import 'home_state.dart';
 
 class HomeController extends ChangeNotifier {
-  factory HomeController(PokemonService pokemonService) {
-    final controller = HomeController._(pokemonService);
+  HomeController._(this._pokemonService, this._themeController);
+
+  factory HomeController(
+    PokemonService pokemonService,
+    ThemeController themeController,
+  ) {
+    final controller = HomeController._(pokemonService, themeController);
     controller.fetchPokemons();
     return controller;
   }
 
-  HomeController._(this._pokemonService);
-
   final PokemonService _pokemonService;
+  final ThemeController _themeController;
+
   HomeState _state = const HomeInitialState();
 
-  HomeState get state => _state;
+  void _changeState(HomeState newState) {
+    _state = newState;
+    notifyListeners();
+  }
 
-  List<Pokemon>? get pokemons =>
-      _state is HomeSuccessState ? (_state as HomeSuccessState).pokemons : null;
+  List<Pokemon> get pokemons => (_state as HomeSuccessState).pokemons;
+  HomeState get state => _state;
+  ThemeController get themeController => _themeController;
 
   Future<void> fetchPokemons() async {
     _changeState(const HomeLoadingState());
@@ -27,10 +37,5 @@ class HomeController extends ChangeNotifier {
       (failure) => _changeState(HomeErrorState(failure.message)),
       (data) => _changeState(HomeSuccessState(data.pokemon)),
     );
-  }
-
-  void _changeState(HomeState newState) {
-    _state = newState;
-    notifyListeners();
   }
 }

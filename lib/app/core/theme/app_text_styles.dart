@@ -7,13 +7,13 @@ class AppTextStyles {
         fontWeight: FontWeight.normal,
       );
 
-  static TextStyle get titleText => TextStyle(
-        fontSize: 16.sp,
+  static TextStyle get headlineText => TextStyle(
+        fontSize: 32.sp,
         fontWeight: FontWeight.bold,
       );
 
-  static TextStyle get headlineText => TextStyle(
-        fontSize: 32.sp,
+  static TextStyle get titleText => TextStyle(
+        fontSize: 16.sp,
         fontWeight: FontWeight.bold,
       );
 }

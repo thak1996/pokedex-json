@@ -3,35 +3,24 @@ import 'exceptions.dart';
 abstract class DataResult<S> {
   const DataResult();
 
-  static DataResult<S> failure<S>(Failure failure) => _FailureResult(failure);
-  static DataResult<S> success<S>(S data) => _SuccessResult(data);
+  S? get data => fold<S?>(
+        (error) => null,
+        (data) => data,
+      );
 
   Failure? get error => fold<Failure?>(
         (error) => error,
         (data) => null,
       );
 
-  S? get data => fold<S?>(
-        (error) => null,
-        (data) => data,
-      );
+  static DataResult<S> failure<S>(Failure failure) => _FailureResult(failure);
 
   T fold<T>(
     T Function(Failure error) fnFailure,
     T Function(S data) fnData,
   );
-}
 
-class _SuccessResult<S> extends DataResult<S> {
-  const _SuccessResult(this._value);
-  final S _value;
-
-  @override
-  T fold<T>(
-    T Function(Failure error) fnFailure,
-    T Function(S data) fnData,
-  ) =>
-      fnData(_value);
+  static DataResult<S> success<S>(S data) => _SuccessResult(data);
 }
 
 class _FailureResult<S> extends DataResult<S> {
@@ -45,4 +34,17 @@ class _FailureResult<S> extends DataResult<S> {
     T Function(S data) fnData,
   ) =>
       fnFailure(_value);
+}
+
+class _SuccessResult<S> extends DataResult<S> {
+  const _SuccessResult(this._value);
+
+  final S _value;
+
+  @override
+  T fold<T>(
+    T Function(Failure error) fnFailure,
+    T Function(S data) fnData,
+  ) =>
+      fnData(_value);
 }
