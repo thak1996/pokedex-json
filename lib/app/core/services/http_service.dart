@@ -68,9 +68,6 @@ class HttpService implements AbstractService {
       final data = json.decode(response.body);
       return DataResult.success(data as T);
     }
-
-    return DataResult.failure(
-      APIException(code: response.statusCode),
-    );
+    return DataResult.failure(APIException(code: response.statusCode));
   }
 }

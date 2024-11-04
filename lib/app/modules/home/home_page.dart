@@ -15,10 +15,7 @@ class HomePage extends StatelessWidget {
       builder: (context, child) {
         final controller = context.watch<HomeController>();
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Pokémon List'),
-            actions: const [ThemeSwitchButton()],
-          ),
+          appBar: AppBar(actions: const [ThemeSwitchButton()]),
           body: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(16.0),

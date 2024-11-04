@@ -1,3 +1,5 @@
+import 'package:integration/app/core/models/pokemon_model.dart';
+
 abstract class HomeState {
   const HomeState();
 }
@@ -12,8 +14,8 @@ class HomeLoadingState extends HomeState {
 
 class HomeSuccessState extends HomeState {
   const HomeSuccessState(this.pokemons);
-  
-  final List<dynamic> pokemons;
+
+  final List<Pokemon> pokemons;
 }
 
 class HomeErrorState extends HomeState {

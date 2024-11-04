@@ -20,7 +20,8 @@ class AppWidget extends StatelessWidget {
           animation: themeController,
           builder: (context, _) {
             return MaterialApp.router(
-              title: 'Flutter Demo',
+              title: 'Pokemon GO API',
+              debugShowCheckedModeBanner: false,
               theme: AppTheme.lightTheme,
               darkTheme: AppTheme.darkTheme,
               themeMode: themeController.themeMode,

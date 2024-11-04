@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:integration/app/core/models/pokemon_model.dart';
 import 'package:integration/app/core/services/pokemon_service.dart';
 import 'home_state.dart';
 
@@ -10,17 +11,15 @@ class HomeController extends ChangeNotifier {
 
   HomeState get state => _state;
 
-  List<dynamic>? get pokemons =>
+  List<Pokemon>? get pokemons =>
       _state is HomeSuccessState ? (_state as HomeSuccessState).pokemons : null;
 
-  Future<void> fetchPokemons({int limit = 20, int offset = 0}) async {
+  Future<void> fetchPokemons() async {
     _changeState(const HomeLoadingState());
-
     final result = await _pokeService.getPokemons();
-
     result.fold(
       (failure) => _changeState(HomeErrorState(failure.message)),
-      (data) => _changeState(HomeSuccessState(data.results)),
+      (data) => _changeState(HomeSuccessState(data.pokemon)),
     );
   }
 
