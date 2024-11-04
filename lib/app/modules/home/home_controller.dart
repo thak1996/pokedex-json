@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:integration/app/core/models/pokemon_type.dart';
 import 'package:integration/app/core/theme/theme_controller.dart';
 import '../../core/models/pokemon_model.dart';
 import '../../core/services/pokemon_service.dart';
@@ -38,4 +39,6 @@ class HomeController extends ChangeNotifier {
       (data) => _changeState(HomeSuccessState(data.pokemon)),
     );
   }
+
+  Color getCardBackgroundColor(String type) => PokemonTypeInfo.getColor(type);
 }

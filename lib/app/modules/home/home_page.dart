@@ -104,7 +104,7 @@ class HomePage extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20.r),
-                  color: Colors.green,
+                  color: controller.getCardBackgroundColor(typesOne),
                 ),
                 child: Stack(
                   children: [
