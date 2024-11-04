@@ -8,7 +8,7 @@ class AppTextStyles {
       );
 
   static TextStyle get headlineText => TextStyle(
-        fontSize: 32.sp,
+        fontSize: 30.sp,
         fontWeight: FontWeight.bold,
       );
 

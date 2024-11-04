@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:integration/app/core/models/pokemon_model.dart';
 import 'package:integration/app/core/theme/app_text_styles.dart';
 import 'package:integration/app/core/theme/theme_controller.dart';
+import 'package:integration/app/modules/home/widgets/end_drawer.dart';
 import 'package:provider/provider.dart';
 import '../../core/services/pokemon_service.dart';
 import 'home_controller.dart';
@@ -19,7 +20,7 @@ class HomePage extends StatelessWidget {
       builder: (context, child) {
         final controller = context.watch<HomeController>();
         return Scaffold(
-          drawer: const Drawer(),
+          endDrawer: const EndDrawer(),
           body: Stack(
             children: [
               Positioned(
@@ -29,7 +30,7 @@ class HomePage extends StatelessWidget {
                   colorFilter: ColorFilter.mode(
                     controller.themeController.themeMode == ThemeMode.dark
                         ? Colors.white
-                        : Colors.white,
+                        : Colors.grey[300]!,
                     BlendMode.srcIn,
                   ),
                   child: Image.asset(
@@ -37,6 +38,14 @@ class HomePage extends StatelessWidget {
                     height: 300.h,
                     fit: BoxFit.fitHeight,
                   ),
+                ),
+              ),
+              Positioned(
+                top: 150.h,
+                left: 24.w,
+                child: Text(
+                  'Pokedex',
+                  style: AppTextStyles.headlineText,
                 ),
               ),
               Positioned(
@@ -52,7 +61,7 @@ class HomePage extends StatelessWidget {
                               ? Colors.white
                               : Colors.black,
                     ),
-                    onPressed: () => Scaffold.of(context).openDrawer(),
+                    onPressed: () => Scaffold.of(context).openEndDrawer(),
                   ),
                 ),
               ),
