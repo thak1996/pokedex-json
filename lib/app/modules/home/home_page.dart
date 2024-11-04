@@ -20,18 +20,7 @@ class HomePage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
-                children: [
-                  ElevatedButton(
-                    onPressed: controller.state is HomeLoadingState
-                        ? null
-                        : () => controller.fetchPokemons(),
-                    child: Text(controller.state is HomeLoadingState
-                        ? 'Carregando...'
-                        : 'Buscar Pokémons'),
-                  ),
-                  const SizedBox(height: 16),
-                  Expanded(child: _buildContent(controller)),
-                ],
+                children: [Expanded(child: _buildContent(controller))],
               ),
             ),
           ),
@@ -42,22 +31,14 @@ class HomePage extends StatelessWidget {
 
   Widget _buildContent(HomeController controller) {
     final state = controller.state;
-
     switch (state.runtimeType) {
       case const (HomeLoadingState):
         return const Center(child: CircularProgressIndicator());
-
       case const (HomeErrorState):
         return Center(child: Text((state as HomeErrorState).message));
-
-      case const (HomeInitialState):
-        return const Center(
-            child: Text('Clique no botão para carregar os pokémons'));
-
       case const (HomeSuccessState):
         final pokemons = controller.pokemons;
         if (pokemons == null) return const SizedBox.shrink();
-
         return ListView.builder(
           itemCount: pokemons.length,
           itemBuilder: (context, index) {
@@ -65,7 +46,6 @@ class HomePage extends StatelessWidget {
             return ListTile(title: Text(pokemon.name));
           },
         );
-
       default:
         return const SizedBox.shrink();
     }
