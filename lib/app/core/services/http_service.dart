@@ -1,13 +1,23 @@
 import 'package:http/http.dart' as http;
-import 'package:integration/app/core/data/data_result.dart';
-import 'package:integration/app/core/data/exceptions.dart';
 import 'dart:convert';
-import 'package:integration/app/core/services/abstract_service.dart';
+import '../data/data_result.dart';
+import '../data/exceptions.dart';
+import 'abstract_service.dart';
 
 class HttpService implements AbstractService {
+  HttpService({required this.baseUrl});
+
   final String baseUrl;
 
-  HttpService({required this.baseUrl});
+  @override
+  Future<DataResult<T>> delete<T>(String endpoint) async {
+    try {
+      final response = await http.delete(Uri.parse('$baseUrl$endpoint'));
+      return _handleResponse<T>(response);
+    } catch (e) {
+      return DataResult.failure(const GeneralException());
+    }
+  }
 
   @override
   Future<DataResult<T>> get<T>(String endpoint) async {
@@ -47,16 +57,6 @@ class HttpService implements AbstractService {
         body: json.encode(data),
         headers: {'Content-Type': 'application/json'},
       );
-      return _handleResponse<T>(response);
-    } catch (e) {
-      return DataResult.failure(const GeneralException());
-    }
-  }
-
-  @override
-  Future<DataResult<T>> delete<T>(String endpoint) async {
-    try {
-      final response = await http.delete(Uri.parse('$baseUrl$endpoint'));
       return _handleResponse<T>(response);
     } catch (e) {
       return DataResult.failure(const GeneralException());

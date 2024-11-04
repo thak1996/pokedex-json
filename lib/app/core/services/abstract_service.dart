@@ -1,4 +1,4 @@
-import 'package:integration/app/core/data/data_result.dart';
+import '../data/data_result.dart';
 
 abstract class AbstractService {
   Future<DataResult<T>> get<T>(String endpoint);

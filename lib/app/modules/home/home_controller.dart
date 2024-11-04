@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:integration/app/core/models/pokemon_model.dart';
-import 'package:integration/app/core/services/pokemon_service.dart';
+import '../../core/models/pokemon_model.dart';
+import '../../core/services/pokemon_service.dart';
 import 'home_state.dart';
 
 class HomeController extends ChangeNotifier {
-  HomeController._(this._pokemonService);
-
   factory HomeController(PokemonService pokemonService) {
     final controller = HomeController._(pokemonService);
     controller.fetchPokemons();
     return controller;
   }
+
+  HomeController._(this._pokemonService);
 
   final PokemonService _pokemonService;
   HomeState _state = const HomeInitialState();

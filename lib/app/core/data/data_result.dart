@@ -1,4 +1,4 @@
-import 'package:integration/app/core/data/exceptions.dart';
+import 'exceptions.dart';
 
 abstract class DataResult<S> {
   const DataResult();

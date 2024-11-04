@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:integration/app/core/theme/theme_controller.dart';
+import '../theme_controller.dart';
 
 class ThemeSwitchButton extends StatelessWidget {
   const ThemeSwitchButton({super.key});

@@ -1,7 +1,7 @@
-import 'package:integration/app/core/data/data_result.dart';
-import 'package:integration/app/core/data/exceptions.dart';
-import 'package:integration/app/core/models/pokemon_model.dart';
-import 'package:integration/app/core/services/http_service.dart';
+import 'http_service.dart';
+import '../data/data_result.dart';
+import '../data/exceptions.dart';
+import '../models/pokemon_model.dart';
 
 class PokemonService {
   PokemonService() : _httpService = HttpService(baseUrl: baseUrl);

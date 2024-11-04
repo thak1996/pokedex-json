@@ -1,4 +1,4 @@
-import 'package:integration/app/core/models/pokemon_model.dart';
+import '../../core/models/pokemon_model.dart';
 
 abstract class HomeState {
   const HomeState();

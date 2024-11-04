@@ -1,5 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:integration/app/core/services/pokemon_service.dart';
+import '../../core/services/pokemon_service.dart';
 import 'home_controller.dart';
 import 'home_page.dart';
 
