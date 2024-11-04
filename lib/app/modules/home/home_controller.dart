@@ -27,7 +27,7 @@ class HomeController extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Pokemon> get pokemons => (_state as HomeSuccessState).pokemons;
+  List<Pokemon> get pokemons => (_state as HomeSuccessState<Pokemon>).data;
   HomeState get state => _state;
   ThemeController get themeController => _themeController;
 
