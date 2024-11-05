@@ -14,8 +14,10 @@ class DetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) =>
-          DetailsController(PokemonService())..loadDetails(pokemonId),
+      create: (_) => DetailsController(PokemonService())
+        ..loadDetails(
+          pokemonId,
+        ),
       builder: (context, child) {
         final controller = Provider.of<DetailsController>(context);
         return Scaffold(
@@ -48,7 +50,7 @@ class DetailsPage extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.only(top: 0.2.sh),
                 child: Opacity(
-                  opacity: 0.3,
+                  opacity: 0.2,
                   child: Image.asset(
                     'assets/images/pokeball.png',
                     height: 200.h,
@@ -69,22 +71,15 @@ class DetailsPage extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.all(16.r),
-              child: Column(
-                children: [
-                  Image.network(pokemonDetails.img),
-                  SizedBox(height: 16.h),
-                  Text(
-                    'Name: ${pokemonDetails.name}',
-                    style: AppTextStyles.titleText,
-                  ),
-                  SizedBox(height: 8.h),
-                  Text(
-                    'Types: ${pokemonDetails.type.join(', ')}',
-                    style: AppTextStyles.bodyText,
-                  ),
-                ],
+            Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: EdgeInsets.only(top: 0.3.sh),
+                child: Image.network(
+                  pokemonDetails.img,
+                  height: 150.h,
+                  fit: BoxFit.fitHeight,
+                ),
               ),
             ),
           ],
