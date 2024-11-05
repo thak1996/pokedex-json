@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:integration/app/core/models/pokemon_model.dart';
+import '../../core/models/pokemon_type.dart';
 import '../../core/services/pokemon_service.dart';
 import 'details_state.dart';
 
 class DetailsController extends ChangeNotifier {
-  DetailsController() {
-    _state = DetailsInitialState();
-  }
+  DetailsController(this._pokemonService);
 
-  final PokemonService _pokemonService = PokemonService();
+  final PokemonService _pokemonService;
 
   DetailsState _state = DetailsInitialState();
 
@@ -19,6 +18,8 @@ class DetailsController extends ChangeNotifier {
 
   Pokemon get pokemon => (_state as DetailsSuccessState).pokemon;
   DetailsState get state => _state;
+
+  Color getCardBackgroundColor(String type) => PokemonTypeInfo.getColor(type);
 
   void loadDetails(int pokemonId) async {
     _changeState(DetailsLoadingState());

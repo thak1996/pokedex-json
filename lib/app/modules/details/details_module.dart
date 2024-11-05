@@ -6,7 +6,9 @@ import 'details_controller.dart';
 class DetailsModule extends Module {
   @override
   void binds(Injector i) {
-    i.addLazySingleton<DetailsController>(() => DetailsController());
+    i.addLazySingleton<DetailsController>(
+      () => DetailsController(i.get<PokemonService>()),
+    );
     i.addLazySingleton<PokemonService>(() => PokemonService());
   }
 

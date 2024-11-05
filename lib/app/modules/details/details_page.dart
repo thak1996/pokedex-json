@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:integration/app/core/theme/app_text_styles.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../core/services/pokemon_service.dart';
+import '../../core/theme/app_text_styles.dart';
 import 'details_controller.dart';
 import 'details_state.dart';
 import 'package:provider/provider.dart';
@@ -12,12 +14,15 @@ class DetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => DetailsController()..loadDetails(pokemonId),
+      create: (_) =>
+          DetailsController(PokemonService())..loadDetails(pokemonId),
       builder: (context, child) {
         final controller = Provider.of<DetailsController>(context);
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Detalhes do Pokémon'),
+          backgroundColor: controller.getCardBackgroundColor(
+            controller.state is DetailsSuccessState
+                ? (controller.state as DetailsSuccessState).pokemon.type.first
+                : '',
           ),
           body: _buildContent(controller),
         );
@@ -35,25 +40,40 @@ class DetailsPage extends StatelessWidget {
       case const (DetailsSuccessState):
       default:
         final pokemonDetails = (state as DetailsSuccessState).pokemon;
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.network(pokemonDetails.img),
-              const SizedBox(height: 16),
-              Text(
-                'Name: ${pokemonDetails.name}',
-                style: AppTextStyles.titleText,
+        return Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            Container(
+              height: 0.6.sh,
+              width: double.infinity,
+              alignment: Alignment.bottomCenter,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(32.r),
+                  topRight: Radius.circular(32.r),
+                ),
               ),
-              const SizedBox(height: 8),
-              Text(
-                'Types: ${pokemonDetails.type.join(', ')}', // Exibe os tipos do Pokémon
-                style: AppTextStyles.bodyText,
+            ),
+            Padding(
+              padding: EdgeInsets.all(16.r),
+              child: Column(
+                children: [
+                  Image.network(pokemonDetails.img),
+                  SizedBox(height: 16.h),
+                  Text(
+                    'Name: ${pokemonDetails.name}',
+                    style: AppTextStyles.titleText,
+                  ),
+                  SizedBox(height: 8.h),
+                  Text(
+                    'Types: ${pokemonDetails.type.join(', ')}',
+                    style: AppTextStyles.bodyText,
+                  ),
+                ],
               ),
-              // Adicione mais informações conforme necessário
-            ],
-          ),
+            ),
+          ],
         );
     }
   }

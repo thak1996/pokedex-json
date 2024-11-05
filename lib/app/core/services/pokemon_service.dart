@@ -33,6 +33,7 @@ class PokemonService {
   }
 
   Future<DataResult<Pokemon>> getPokemonById(int id) async {
+    await Future.delayed(const Duration(seconds: 2));
     final result = await getPokemons();
     return result.fold(
       (failure) => DataResult.failure(failure),
@@ -44,7 +45,10 @@ class PokemonService {
           return DataResult.success(pokemon);
         } catch (e) {
           return DataResult.failure(
-            const APIException(code: 404, textCode: 'Pokemon não encontrado'),
+            const APIException(
+              code: 404,
+              textCode: 'Pokemon não encontrado',
+            ),
           );
         }
       },
