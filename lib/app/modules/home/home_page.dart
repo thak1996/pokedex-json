@@ -101,15 +101,16 @@ class HomePage extends StatelessWidget {
             final pokemon = pokemons[index];
             final typesOne = pokemon.type.first;
             final typesTwo = pokemon.type.length > 1 ? pokemon.type[1] : null;
-            return InkWell(
-              onTap: () => Modular.to.pushNamed('/details/${pokemon.id}'),
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 8.w),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.r),
-                    color: controller.getCardBackgroundColor(typesOne),
-                  ),
+            return Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 8.w),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.r),
+                  color: controller.getCardBackgroundColor(typesOne),
+                ),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(20.r),
+                  onTap: () => Modular.to.pushNamed('/details/${pokemon.id}'),
                   child: Stack(
                     children: [
                       imgPokeballCard(),
