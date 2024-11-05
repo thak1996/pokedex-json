@@ -43,6 +43,20 @@ class DetailsPage extends StatelessWidget {
         return Stack(
           alignment: Alignment.bottomCenter,
           children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: EdgeInsets.only(top: 0.2.sh),
+                child: Opacity(
+                  opacity: 0.3,
+                  child: Image.asset(
+                    'assets/images/pokeball.png',
+                    height: 200.h,
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+              ),
+            ),
             Container(
               height: 0.6.sh,
               width: double.infinity,
