@@ -1,6 +1,8 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 
+import '../theme/app_styles.dart';
+
 enum PokemonType {
   grass,
   poison,
@@ -17,6 +19,9 @@ enum PokemonType {
   ice,
   ghost,
   dragon,
+  dark,
+  fairy,
+  steel,
 }
 
 class PokemonTypeInfo {
@@ -27,21 +32,24 @@ class PokemonTypeInfo {
 
   // Mapa de tipos para cores
   static final Map<PokemonType, Color> typeColors = {
-    PokemonType.grass: Colors.green,
-    PokemonType.poison: Colors.purple,
-    PokemonType.fire: Colors.red,
-    PokemonType.flying: Colors.blue,
-    PokemonType.water: Colors.blue,
-    PokemonType.bug: Colors.green,
-    PokemonType.normal: Colors.grey,
-    PokemonType.electric: Colors.yellow,
-    PokemonType.ground: Colors.brown,
-    PokemonType.fighting: Colors.red,
-    PokemonType.psychic: Colors.pink,
-    PokemonType.rock: Colors.grey[800]!,
-    PokemonType.ice: Colors.blue,
-    PokemonType.ghost: Colors.purple,
-    PokemonType.dragon: Colors.indigo,
+    PokemonType.bug: AppStyles.pokeColorBug,
+    PokemonType.dark: AppStyles.pokeColorDark,
+    PokemonType.dragon: AppStyles.pokeColorDragon,
+    PokemonType.electric: AppStyles.pokeColorElectric,
+    PokemonType.fairy: AppStyles.pokeColorFairy,
+    PokemonType.fighting: AppStyles.pokeColorFighting,
+    PokemonType.fire: AppStyles.pokeColorFire,
+    PokemonType.flying: AppStyles.pokeColorFlying,
+    PokemonType.ghost: AppStyles.pokeColorGhost,
+    PokemonType.normal: AppStyles.pokeColorNormal,
+    PokemonType.grass: AppStyles.pokeColorGrass,
+    PokemonType.ground: AppStyles.pokeColorGround,
+    PokemonType.ice: AppStyles.pokeColorIce,
+    PokemonType.poison: AppStyles.pokeColorPoison,
+    PokemonType.psychic: AppStyles.pokeColorPsychic,
+    PokemonType.rock: AppStyles.pokeColorRock,
+    PokemonType.steel: AppStyles.pokeColorSteel,
+    PokemonType.water: AppStyles.pokeColorWater,
   };
 
   // Método para obter a cor com base no tipo

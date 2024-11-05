@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:integration/app/core/models/pokemon_model.dart';
-import 'package:integration/app/core/theme/app_text_styles.dart';
+import 'package:integration/app/core/theme/app_styles.dart';
 import 'package:integration/app/core/theme/theme_controller.dart';
 import 'package:integration/app/modules/home/widgets/end_drawer.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +21,7 @@ class HomePage extends StatelessWidget {
       builder: (context, child) {
         final controller = Provider.of<HomeController>(context);
         return Scaffold(
+          backgroundColor: AppStyles.primaryColor,
           endDrawer: const EndDrawer(),
           body: Stack(
             children: [
@@ -46,7 +47,7 @@ class HomePage extends StatelessWidget {
                 left: 24.w,
                 child: Text(
                   'Pokedex',
-                  style: AppTextStyles.headlineText,
+                  style: AppStyles.headerStyles[Header.headline],
                 ),
               ),
               Positioned(
@@ -67,10 +68,22 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 200.h),
-                child: SafeArea(
-                  child: Column(
-                    children: [Expanded(child: _buildContent(controller))],
+                padding: EdgeInsets.only(
+                  top: 200.h,
+                  left: 2.w,
+                  right: 2.w,
+                  bottom: 2.h,
+                ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.r),
+                    color: Colors.white,
+                    boxShadow: AppStyles.outerShadow,
+                  ),
+                  child: SafeArea(
+                    child: Column(
+                      children: [Expanded(child: _buildContent(controller))],
+                    ),
                   ),
                 ),
               ),
@@ -161,9 +174,7 @@ class HomePage extends StatelessWidget {
       left: 10.w,
       child: Text(
         pokemon.name,
-        style: AppTextStyles.titleText.copyWith(
-          color: Colors.white,
-        ),
+        style: AppStyles.bodyStyles[Body.body1]?.apply(color: Colors.white),
       ),
     );
   }
@@ -186,7 +197,7 @@ class HomePage extends StatelessWidget {
           ),
           child: Text(
             typesOne.toString(),
-            style: AppTextStyles.bodyText.copyWith(
+            style: AppStyles.bodyStyles[Body.body1]?.copyWith(
               color: Colors.white,
             ),
           ),
@@ -213,7 +224,7 @@ class HomePage extends StatelessWidget {
           ),
           child: Text(
             typesTwo,
-            style: AppTextStyles.bodyText.copyWith(
+            style: AppStyles.bodyStyles[Body.body1]?.copyWith(
               color: Colors.white,
             ),
           ),

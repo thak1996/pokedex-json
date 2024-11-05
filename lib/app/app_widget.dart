@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_controller.dart';
+import 'core/utils/util_theme.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
@@ -19,11 +20,13 @@ class AppWidget extends StatelessWidget {
         return AnimatedBuilder(
           animation: themeController,
           builder: (context, _) {
+            TextTheme textTheme = createTextTheme(context, "Roboto", "Poppins");
+            MaterialTheme theme = MaterialTheme(textTheme);
             return MaterialApp.router(
-              title: 'Pokemon GO API',
+              title: 'Pokemon API',
               debugShowCheckedModeBanner: false,
-              theme: AppTheme.lightTheme,
-              darkTheme: AppTheme.darkTheme,
+              theme: theme.light(),
+              darkTheme: theme.dark(),
               themeMode: themeController.themeMode,
               routerDelegate: Modular.routerDelegate,
               routeInformationParser: Modular.routeInformationParser,
