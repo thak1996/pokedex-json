@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:integration/app/core/models/pokemon_model.dart';
 import 'package:integration/app/core/theme/app_text_styles.dart';
@@ -18,7 +19,7 @@ class HomePage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => HomeController(PokemonService(), ThemeController()),
       builder: (context, child) {
-        final controller = context.watch<HomeController>();
+        final controller = Provider.of<HomeController>(context);
         return Scaffold(
           endDrawer: const EndDrawer(),
           body: Stack(
@@ -88,6 +89,7 @@ class HomePage extends StatelessWidget {
       case const (HomeErrorState):
         return Center(child: Text((state as HomeErrorState).message));
       case const (HomeSuccessState):
+      default:
         final pokemons = controller.pokemons;
         return GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -99,28 +101,29 @@ class HomePage extends StatelessWidget {
             final pokemon = pokemons[index];
             final typesOne = pokemon.type.first;
             final typesTwo = pokemon.type.length > 1 ? pokemon.type[1] : null;
-            return Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 8.w),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.r),
-                  color: controller.getCardBackgroundColor(typesOne),
-                ),
-                child: Stack(
-                  children: [
-                    imgPokeballCard(),
-                    imgPokemonCard(pokemon),
-                    titlePokemonCard(pokemon),
-                    typeOnePokemonCard(typesOne),
-                    if (typesTwo != null) typeTwoPokemonCard(typesTwo),
-                  ],
+            return InkWell(
+              onTap: () => Modular.to.pushNamed('/details/${pokemon.id}'),
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 8.w),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.r),
+                    color: controller.getCardBackgroundColor(typesOne),
+                  ),
+                  child: Stack(
+                    children: [
+                      imgPokeballCard(),
+                      imgPokemonCard(pokemon),
+                      titlePokemonCard(pokemon),
+                      typeOnePokemonCard(typesOne),
+                      if (typesTwo != null) typeTwoPokemonCard(typesTwo),
+                    ],
+                  ),
                 ),
               ),
             );
           },
         );
-      default:
-        return const SizedBox.shrink();
     }
   }
 

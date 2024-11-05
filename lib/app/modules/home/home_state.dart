@@ -1,23 +1,17 @@
 class HomeErrorState extends HomeState {
-  const HomeErrorState(this.message);
+  HomeErrorState(this.message);
 
   final String message;
 }
 
-class HomeInitialState extends HomeState {
-  const HomeInitialState();
-}
+class HomeInitialState extends HomeState {}
 
-class HomeLoadingState extends HomeState {
-  const HomeLoadingState();
-}
+class HomeLoadingState extends HomeState {}
 
-abstract class HomeState {
-  const HomeState();
-}
+abstract class HomeState {}
 
 class HomeSuccessState<T> extends HomeState {
-  const HomeSuccessState(this.data);
+  HomeSuccessState(this.data);
 
   final List<T> data;
 }

@@ -20,7 +20,7 @@ class HomeController extends ChangeNotifier {
   final PokemonService _pokemonService;
   final ThemeController _themeController;
 
-  HomeState _state = const HomeInitialState();
+  HomeState _state = HomeInitialState();
 
   void _changeState(HomeState newState) {
     _state = newState;
@@ -32,7 +32,7 @@ class HomeController extends ChangeNotifier {
   ThemeController get themeController => _themeController;
 
   Future<void> fetchPokemons() async {
-    _changeState(const HomeLoadingState());
+    _changeState(HomeLoadingState());
     final result = await _pokemonService.getPokemons();
     result.fold(
       (failure) => _changeState(HomeErrorState(failure.message)),

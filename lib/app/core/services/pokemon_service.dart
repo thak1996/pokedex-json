@@ -31,4 +31,23 @@ class PokemonService {
       },
     );
   }
+
+  Future<DataResult<Pokemon>> getPokemonById(int id) async {
+    final result = await getPokemons();
+    return result.fold(
+      (failure) => DataResult.failure(failure),
+      (data) {
+        try {
+          final pokemon = data.pokemon.firstWhere(
+            (pokemon) => pokemon.id == id,
+          );
+          return DataResult.success(pokemon);
+        } catch (e) {
+          return DataResult.failure(
+            const APIException(code: 404, textCode: 'Pokemon não encontrado'),
+          );
+        }
+      },
+    );
+  }
 }
