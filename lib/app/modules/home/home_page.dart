@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:integration/app/core/models/pokemon_model.dart';
-import 'package:integration/app/core/theme/app_styles.dart';
-import 'package:integration/app/core/theme/theme_controller.dart';
-import 'package:integration/app/modules/home/widgets/end_drawer.dart';
 import 'package:provider/provider.dart';
+import '../../core/models/pokemon_model.dart';
 import '../../core/services/pokemon_service.dart';
+import '../../core/theme/app_styles.dart';
+import '../../core/theme/theme_controller.dart';
+import 'widgets/end_drawer.dart';
 import 'home_controller.dart';
 import 'home_state.dart';
 
@@ -92,21 +92,27 @@ class HomePage extends StatelessWidget {
         final pokemons = controller.pokemons;
         return GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 1.4,
+            crossAxisCount: 3,
+            childAspectRatio: 1,
           ),
           itemCount: pokemons.length,
           itemBuilder: (context, index) {
             final pokemon = pokemons[index];
             final typesOne = pokemon.type.first;
-            final typesTwo = pokemon.type.length > 1 ? pokemon.type[1] : null;
+            final number = pokemon.id.toString().padLeft(3, '0');
             return Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 8.w),
-              child: Container(
-                decoration: BoxDecoration(
+              padding: EdgeInsets.only(
+                left: 4.w,
+                right: 4.w,
+                bottom: 4.h,
+                top: 4.h,
+              ),
+              child: Card(
+                elevation: 5,
+                shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.r),
-                  color: controller.getCardBackgroundColor(typesOne),
                 ),
+                color: controller.getCardBackgroundColor(typesOne),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(20.r),
                   onTap: () => Modular.to.pushNamed('/details/${pokemon.id}'),
@@ -114,7 +120,8 @@ class HomePage extends StatelessWidget {
                     children: [
                       imgPokeballCard(),
                       imgPokemonCard(pokemon),
-                      typeOnePokemonCard(pokemon, typesOne, typesTwo),
+                      namePokemonCard(pokemon),
+                      idPokemonCard(number),
                     ],
                   ),
                 ),
@@ -125,14 +132,35 @@ class HomePage extends StatelessWidget {
     }
   }
 
+  Widget idPokemonCard(String number) {
+    return Align(
+      alignment: Alignment.topRight,
+      child: Padding(
+        padding: EdgeInsets.only(right: 8.w, top: 8.h),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.r),
+            color: Colors.black38,
+          ),
+          child: Text(
+            '#$number',
+            style: AppStyles.bodyStyles[Body.caption]?.copyWith(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget imgPokeballCard() {
     return Align(
-      alignment: Alignment.bottomRight,
+      alignment: Alignment.center,
       child: Opacity(
         opacity: 0.3,
         child: Image.asset(
           'assets/images/pokeball.png',
-          height: 100.h,
           fit: BoxFit.fitHeight,
         ),
       ),
@@ -141,7 +169,7 @@ class HomePage extends StatelessWidget {
 
   Widget imgPokemonCard(Pokemon pokemon) {
     return Align(
-      alignment: Alignment.bottomRight,
+      alignment: Alignment.center,
       child: CachedNetworkImage(
         imageUrl: pokemon.img,
         height: 100.h,
@@ -150,58 +178,22 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget typeOnePokemonCard(
-    Pokemon pokemon,
-    String typesOne,
-    String? typesTwo,
-  ) {
-    final boxDecoration = BoxDecoration(
-      borderRadius: BorderRadius.circular(20.r),
-      color: Colors.black26,
-    );
-    final padding = EdgeInsets.symmetric(horizontal: 4.w, vertical: 4.h);
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(height: 20.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.w),
-            child: Text(
-              pokemon.name,
-              style: AppStyles.bodyStyles[Body.body1]?.copyWith(
-                color: Colors.white,
-              ),
-            ),
+  Widget namePokemonCard(Pokemon pokemon) {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
+        margin: EdgeInsets.only(bottom: 4.h),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.r),
+          color: Colors.black38,
+        ),
+        child: Text(
+          pokemon.name,
+          style: AppStyles.bodyStyles[Body.caption]?.copyWith(
+            color: Colors.white,
           ),
-          SizedBox(height: 4.h),
-          Container(
-            decoration: boxDecoration,
-            margin: EdgeInsets.symmetric(horizontal: 8.w),
-            padding: padding,
-            child: Text(
-              typesOne,
-              style: AppStyles.bodyStyles[Body.body2]?.copyWith(
-                color: Colors.white,
-              ),
-            ),
-          ),
-          if (typesTwo != null) ...[
-            SizedBox(height: 4.h),
-            Container(
-              decoration: boxDecoration,
-              margin: EdgeInsets.symmetric(horizontal: 8.w),
-              padding: padding,
-              child: Text(
-                typesTwo,
-                style: AppStyles.bodyStyles[Body.body2]?.copyWith(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ]
-        ],
+        ),
       ),
     );
   }
