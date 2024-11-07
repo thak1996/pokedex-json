@@ -20,22 +20,18 @@ class AppStyles {
     Body.body1: TextStyle(
       fontWeight: FontWeight.normal,
       fontSize: 14.sp,
-      height: 16.sp,
     ),
     Body.body2: TextStyle(
       fontWeight: FontWeight.normal,
       fontSize: 12.sp,
-      height: 16.sp,
     ),
     Body.body3: TextStyle(
       fontWeight: FontWeight.normal,
       fontSize: 12.sp,
-      height: 10.sp,
     ),
     Body.caption: TextStyle(
       fontWeight: FontWeight.normal,
       fontSize: 10.sp,
-      height: 8.sp,
     ),
   };
 
@@ -43,22 +39,18 @@ class AppStyles {
     Header.headline: TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 24.sp,
-      height: 32.sp,
     ),
     Header.subTitle1: TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 14.sp,
-      height: 16.sp,
     ),
     Header.subTitle2: TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 12.sp,
-      height: 16.sp,
     ),
     Header.subTitle3: TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 10.sp,
-      height: 16.sp,
     ),
   };
 
