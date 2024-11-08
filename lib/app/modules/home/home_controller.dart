@@ -48,19 +48,15 @@ class HomeController extends ChangeNotifier {
   }
 
   void searchPokemon(String query) {
-    if (_state is! HomeSuccessState<Pokemon>) return;
-
     if (query.isEmpty) {
       _filteredPokemons = _allPokemons;
       _changeState(HomeSuccessState(_filteredPokemons));
       return;
     }
-
     _filteredPokemons = _allPokemons.where((pokemon) {
       final name = pokemon.name.toLowerCase();
       final searchLower = query.toLowerCase();
       final number = pokemon.id.toString();
-
       return name.contains(searchLower) ||
           number.contains(searchLower) ||
           pokemon.type.any((type) {
