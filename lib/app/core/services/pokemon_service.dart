@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:io';
 import 'http_service.dart';
 import '../data/data_result.dart';
 import '../data/exceptions.dart';
@@ -11,29 +13,7 @@ class PokemonService {
 
   final HttpService _httpService;
 
-  Future<DataResult<PokemonResponse>> getPokemons() async {
-    await Future.delayed(const Duration(seconds: 2));
-    final result = await _httpService.get('/pokedex.json');
-    return result.fold(
-      (failure) => DataResult.failure(failure),
-      (data) {
-        try {
-          final pokemonResponse = PokemonResponse.fromJson(data);
-          return DataResult.success(pokemonResponse);
-        } catch (e) {
-          return DataResult.failure(
-            const APIException(
-              code: 500,
-              textCode: 'Erro ao processar dados dos Pokémon',
-            ),
-          );
-        }
-      },
-    );
-  }
-
   Future<DataResult<Pokemon>> getPokemonById(int id) async {
-    await Future.delayed(const Duration(seconds: 2));
     final result = await getPokemons();
     return result.fold(
       (failure) => DataResult.failure(failure),
@@ -44,14 +24,62 @@ class PokemonService {
           );
           return DataResult.success(pokemon);
         } catch (e) {
-          return DataResult.failure(
-            const APIException(
-              code: 404,
-              textCode: 'Pokemon não encontrado',
-            ),
-          );
+          return DataResult.failure(const APIException(
+            code: 404,
+            errorType: APIErrorType.notFound,
+          ));
         }
       },
     );
+  }
+
+  Future<DataResult<PokemonResponse>> getPokemons() async {
+    try {
+      await Future.delayed(const Duration(seconds: 2));
+      final result = await _httpService.get('/pokedex.json');      
+      return result.fold(
+        (failure) => DataResult.failure(failure),
+        (data) {
+          if (data == null) {
+            return DataResult.failure(const APIException(
+              code: 204,
+              errorType: APIErrorType.emptyResponse,
+            ));
+          }          
+          try {
+            final pokemonResponse = PokemonResponse.fromJson(data);
+            if (pokemonResponse.pokemon.isEmpty) {
+              return DataResult.failure(const APIException(
+                code: 404,
+                errorType: APIErrorType.notFound,
+              ));
+            }
+            return DataResult.success(pokemonResponse);
+          } on FormatException {
+            return DataResult.failure(const APIException(
+              code: 500,
+              errorType: APIErrorType.invalidData,
+            ));
+          } catch (e) {
+            return DataResult.failure(const APIException(
+              code: 500,
+              errorType: APIErrorType.serverError,
+            ));
+          }
+        },
+      );
+    } on SocketException {
+      return DataResult.failure(const APIException(
+        code: 503,
+        errorType: APIErrorType.noConnection,
+      ));
+    } on TimeoutException {
+      return DataResult.failure(const APIException(
+        code: 408,
+        errorType: APIErrorType.timeout,
+      ));
+    } catch (e) {
+      return DataResult.failure(const APIException(code: 500));
+    }
   }
 }
