@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:integration/app/modules/home/widgets/pokemon_card.dart';
 import 'package:provider/provider.dart';
 import '../../core/services/pokemon_service.dart';
-import '../../core/theme/app_icon.dart';
 import '../../core/theme/app_styles.dart';
 import '../../core/theme/theme_controller.dart';
 import 'widgets/end_drawer.dart';
@@ -34,6 +33,8 @@ class HomePage extends StatelessWidget {
                   SizedBox(height: 12.h),
                   SearchHeader(
                     onChanged: (value) => controller.searchPokemon(value),
+                    onSortTypeChanged: controller.toggleSortType,
+                    currentSortType: controller.currentSortType,
                   ),
                 ],
               ),

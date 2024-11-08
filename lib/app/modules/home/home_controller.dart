@@ -5,6 +5,11 @@ import '../../core/services/pokemon_service.dart';
 import '../../core/theme/theme_controller.dart';
 import 'home_state.dart';
 
+enum SortType {
+  numeric,
+  alphabetic,
+}
+
 class HomeController extends ChangeNotifier {
   HomeController._(this._pokemonService, this._themeController);
 
@@ -13,6 +18,7 @@ class HomeController extends ChangeNotifier {
     ThemeController themeController,
   ) {
     final controller = HomeController._(pokemonService, themeController);
+    controller._currentSortType = SortType.numeric;
     controller.fetchPokemons();
     return controller;
   }
@@ -21,6 +27,7 @@ class HomeController extends ChangeNotifier {
   final ThemeController _themeController;
 
   List<Pokemon> _allPokemons = [];
+  late SortType _currentSortType;
   List<Pokemon> _filteredPokemons = [];
   HomeState _state = HomeInitialState();
 
@@ -29,6 +36,19 @@ class HomeController extends ChangeNotifier {
     notifyListeners();
   }
 
+  void _sortPokemons() {
+    switch (_currentSortType) {
+      case SortType.numeric:
+        _filteredPokemons.sort((a, b) => a.id.compareTo(b.id));
+        _allPokemons.sort((a, b) => a.id.compareTo(b.id));
+      case SortType.alphabetic:
+        _filteredPokemons.sort((a, b) => a.name.compareTo(b.name));
+        _allPokemons.sort((a, b) => a.name.compareTo(b.name));
+    }
+    _changeState(HomeSuccessState(_filteredPokemons));
+  }
+
+  SortType get currentSortType => _currentSortType;
   List<Pokemon> get pokemons =>
       _state is HomeSuccessState<Pokemon> ? _filteredPokemons : [];
 
@@ -48,7 +68,7 @@ class HomeController extends ChangeNotifier {
       (data) {
         _allPokemons = data.pokemon;
         _filteredPokemons = _allPokemons;
-        _changeState(HomeSuccessState(_filteredPokemons));
+        _sortPokemons();
       },
     );
   }
@@ -77,5 +97,11 @@ class HomeController extends ChangeNotifier {
     } else {
       _changeState(HomeSuccessState(_filteredPokemons));
     }
+  }
+
+  void toggleSortType(SortType newType) {
+    _currentSortType = newType;
+    _sortPokemons();
+    notifyListeners();
   }
 }
