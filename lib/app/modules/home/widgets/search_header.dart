@@ -50,7 +50,7 @@ class SearchHeader extends StatelessWidget {
           borderRadius: BorderRadius.circular(24.r),
           onTap: () => showDialog(
             context: context,
-            barrierColor: Colors.black.withOpacity(0.5),
+            barrierColor: Colors.black.withOpacity(0.6),
             builder: (_) => SortOptionsBottomSheet(
               currentSortType: currentSortType,
               onSortTypeChanged: onSortTypeChanged,
