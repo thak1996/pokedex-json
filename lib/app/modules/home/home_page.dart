@@ -9,7 +9,7 @@ import '../../core/theme/theme_controller.dart';
 import 'widgets/end_drawer.dart';
 import 'home_controller.dart';
 import 'home_state.dart';
-import 'widgets/icon.dart';
+import 'widgets/home_header.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -25,45 +25,9 @@ class HomePage extends StatelessWidget {
           endDrawer: const EndDrawer(),
           body: Stack(
             children: [
-              Column(
+              const Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 8.w, right: 8.w, top: 8.h),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              constraints: BoxConstraints(maxHeight: 40.h),
-                              child: AppIcon.pokeball(color: AppStyles.white),
-                            ),
-                            SizedBox(width: 12.w),
-                            Text(
-                              'Pokedex',
-                              style: AppStyles.headerStyles[Header.headline]
-                                  ?.apply(
-                                color: AppStyles.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Builder(
-                          builder: (context) => IconButton(
-                            icon: Icon(
-                              Icons.menu,
-                              size: 30,
-                              color: AppStyles.white,
-                            ),
-                            onPressed: () =>
-                                Scaffold.of(context).openEndDrawer(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                children: [HomeHeader()],
               ),
               Padding(
                 padding: EdgeInsets.only(
