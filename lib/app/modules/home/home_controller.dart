@@ -6,10 +6,7 @@ import '../../core/services/pokemon_service.dart';
 import '../../core/theme/theme_controller.dart';
 import 'home_state.dart';
 
-enum SortType {
-  numeric,
-  alphabetic,
-}
+enum SortType { numeric, alphabetic }
 
 class HomeController extends ChangeNotifier {
   HomeController._(this._pokemonService, this._themeController);
@@ -28,46 +25,60 @@ class HomeController extends ChangeNotifier {
   final ThemeController _themeController;
 
   List<Pokemon> _allPokemons = [];
-  List<Pokemon> _filteredPokemons = [];
   late SortType _currentSortType;
+  List<Pokemon> _filteredPokemons = [];
   HomeState _state = HomeInitialState();
+
+  @override
+  void dispose() {
+    _allPokemons.clear();
+    _filteredPokemons.clear();
+    super.dispose();
+  }
 
   void _changeState(HomeState newState) {
     _state = newState;
     notifyListeners();
   }
 
+  bool _matchesPokemonCriteria(Pokemon pokemon, String searchTerm) {
+    return pokemon.name.toLowerCase().contains(searchTerm) ||
+        pokemon.id.toString().contains(searchTerm) ||
+        pokemon.type.any((type) => type.toLowerCase().contains(searchTerm));
+  }
+
   void _sortPokemons() {
-    switch (_currentSortType) {
-      case SortType.numeric:
-        _filteredPokemons.sort((a, b) => a.id.compareTo(b.id));
-        _allPokemons.sort((a, b) => a.id.compareTo(b.id));
-      case SortType.alphabetic:
-        _filteredPokemons.sort((a, b) => a.name.compareTo(b.name));
-        _allPokemons.sort((a, b) => a.name.compareTo(b.name));
-    }
+    final comparator = _currentSortType == SortType.numeric
+        ? (Pokemon a, Pokemon b) => a.id.compareTo(b.id)
+        : (Pokemon a, Pokemon b) => a.name.compareTo(b.name);
+    _filteredPokemons = List.from(_filteredPokemons)..sort(comparator);
+    _allPokemons = List.from(_allPokemons)..sort(comparator);
   }
 
   SortType get currentSortType => _currentSortType;
-  List<Pokemon> get pokemons => _filteredPokemons;
-
+  List<Pokemon> get pokemons => List.unmodifiable(_filteredPokemons);
   HomeState get state => _state;
   ThemeController get themeController => _themeController;
 
   void clearSearch() {
-    _filteredPokemons = _allPokemons;
+    _filteredPokemons = List.from(_allPokemons);
     _changeState(HomeSuccessState(_filteredPokemons));
   }
 
   Future<void> fetchPokemons() async {
+    if (_state is HomeLoadingState) return;
     _changeState(HomeLoadingState());
     try {
       final result = await _pokemonService.getPokemons();
       result.fold(
         (failure) => _changeState(HomeErrorState(failure.message)),
         (data) {
-          _allPokemons = data.pokemon;
-          _filteredPokemons = _allPokemons;
+          if (data.pokemon.isEmpty) {
+            _changeState(HomeEmptyState('No Pokemons available'));
+            return;
+          }
+          _allPokemons = List.from(data.pokemon);
+          _filteredPokemons = List.from(_allPokemons);
           _sortPokemons();
           _changeState(HomeSuccessState(_filteredPokemons));
         },
@@ -81,21 +92,14 @@ class HomeController extends ChangeNotifier {
 
   void searchPokemon(String query) {
     if (query.isEmpty) {
-      _filteredPokemons = _allPokemons;
-      _changeState(HomeSuccessState(_filteredPokemons));
+      clearSearch();
       return;
     }
-    _filteredPokemons = _allPokemons.where((pokemon) {
-      final name = pokemon.name.toLowerCase();
-      final searchLower = query.toLowerCase();
-      final number = pokemon.id.toString();
-      return name.contains(searchLower) ||
-          number.contains(searchLower) ||
-          pokemon.type.any((type) {
-            return type.toLowerCase().contains(searchLower);
-          });
+    final searchLower = query.toLowerCase();
+    final filteredList = _allPokemons.where((pokemon) {
+      return _matchesPokemonCriteria(pokemon, searchLower);
     }).toList();
-
+    _filteredPokemons = filteredList;
     if (_filteredPokemons.isEmpty) {
       _changeState(HomeEmptyState('Pokemon não encontrado'));
     } else {
@@ -104,8 +108,9 @@ class HomeController extends ChangeNotifier {
   }
 
   void toggleSortType(SortType newType) {
+    if (_currentSortType == newType) return;
     _currentSortType = newType;
     _sortPokemons();
-    notifyListeners();
+    _changeState(HomeSuccessState(_filteredPokemons));
   }
 }
