@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/data/exceptions.dart';
 import '../../core/models/pokemon_model.dart';
 import '../../core/models/pokemon_type.dart';
 import '../../core/services/pokemon_service.dart';
@@ -27,8 +28,8 @@ class HomeController extends ChangeNotifier {
   final ThemeController _themeController;
 
   List<Pokemon> _allPokemons = [];
-  late SortType _currentSortType;
   List<Pokemon> _filteredPokemons = [];
+  late SortType _currentSortType;
   HomeState _state = HomeInitialState();
 
   void _changeState(HomeState newState) {
@@ -45,12 +46,10 @@ class HomeController extends ChangeNotifier {
         _filteredPokemons.sort((a, b) => a.name.compareTo(b.name));
         _allPokemons.sort((a, b) => a.name.compareTo(b.name));
     }
-    _changeState(HomeSuccessState(_filteredPokemons));
   }
 
   SortType get currentSortType => _currentSortType;
-  List<Pokemon> get pokemons =>
-      _state is HomeSuccessState<Pokemon> ? _filteredPokemons : [];
+  List<Pokemon> get pokemons => _filteredPokemons;
 
   HomeState get state => _state;
   ThemeController get themeController => _themeController;
@@ -62,18 +61,20 @@ class HomeController extends ChangeNotifier {
 
   Future<void> fetchPokemons() async {
     _changeState(HomeLoadingState());
-    // await Future.delayed(const Duration(seconds: 2));
-    // _changeState(HomeErrorState('Network connection failed'));
-    // return;
-    final result = await _pokemonService.getPokemons();
-    result.fold(
-      (failure) => _changeState(HomeErrorState(failure.message)),
-      (data) {
-        _allPokemons = data.pokemon;
-        _filteredPokemons = _allPokemons;
-        _sortPokemons();
-      },
-    );
+    try {
+      final result = await _pokemonService.getPokemons();
+      result.fold(
+        (failure) => _changeState(HomeErrorState(failure.message)),
+        (data) {
+          _allPokemons = data.pokemon;
+          _filteredPokemons = _allPokemons;
+          _sortPokemons();
+          _changeState(HomeSuccessState(_filteredPokemons));
+        },
+      );
+    } catch (e) {
+      _changeState(HomeErrorState(const APIException(code: 500).message));
+    }
   }
 
   Color getCardBackgroundColor(String type) => PokemonTypeInfo.getColor(type);

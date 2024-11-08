@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/theme/app_icon.dart';
 import '../../../core/theme/app_styles.dart';
 import '../home_controller.dart';
-import 'search_field.dart';
+import '../../../core/widgets/search_field.dart';
 import 'sort_options_bottom_sheet.dart';
 
 class SearchHeader extends StatelessWidget {

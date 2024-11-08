@@ -7,6 +7,8 @@ import '../../core/theme/app_styles.dart';
 import '../../core/theme/theme_controller.dart';
 import 'home_controller.dart';
 import 'home_state.dart';
+import '../../core/widgets/empty_state_text.dart';
+import '../../core/widgets/error_state_text.dart';
 import 'widgets/home_header.dart';
 import 'widgets/pokemon_card.dart';
 import 'widgets/search_header.dart';
@@ -22,7 +24,6 @@ class HomePage extends StatelessWidget {
         final controller = Provider.of<HomeController>(context);
         return Scaffold(
           backgroundColor: AppStyles.primaryColor,
-          // endDrawer: const EndDrawer(),
           body: Stack(
             children: [
               Column(
@@ -65,20 +66,7 @@ class HomePage extends StatelessWidget {
     switch (state.runtimeType) {
       case const (HomeLoadingState):
         return const Center(child: CircularProgressIndicator());
-      case const (HomeErrorState):
-        return Center(
-          child: Text(
-            (state as HomeErrorState).message,
-            style: AppStyles.headerStyles[Header.subTitle1],
-          ),
-        );
-      case const (HomeEmptyState):
-        return EmptyState(
-          state: state,
-          text: (state as HomeEmptyState).message,
-        );
       case const (HomeSuccessState):
-      default:
         final pokemons = controller.pokemons;
         return GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -96,35 +84,20 @@ class HomePage extends StatelessWidget {
             );
           },
         );
+      case const (HomeEmptyState):
+        final emptyState = state as HomeEmptyState;
+        return EmptyStateText(text: emptyState.message);
+      case const (HomeErrorState):
+        final errorState = state as HomeErrorState;
+        return ErrorStateText(
+          onPressed: controller.fetchPokemons,
+          text: errorState.message,
+        );
+      default:
+        return ErrorStateText(
+          onPressed: controller.fetchPokemons,
+          text: 'An unexpected error occurred',
+        );
     }
-  }
-}
-
-class EmptyState extends StatelessWidget {
-  const EmptyState({
-    super.key,
-    required this.state,
-    required this.text,
-  });
-
-  final HomeState state;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset('assets/images/pikachu_triste.png'),
-          SizedBox(height: 16.h),
-          Text(
-            text,
-            textAlign: TextAlign.center,
-            style: AppStyles.bodyStyles[Body.body1],
-          ),
-        ],
-      ),
-    );
   }
 }

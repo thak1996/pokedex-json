@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../core/theme/widgets/theme_switch_button.dart';
+import '../theme/widgets/theme_switch_button.dart';
 
 class EndDrawer extends StatelessWidget {
   const EndDrawer({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../core/theme/app_icon.dart';
-import '../../../core/theme/app_styles.dart';
+import '../theme/app_icon.dart';
+import '../theme/app_styles.dart';
 
 class SearchField extends StatelessWidget {
   const SearchField({required this.onChanged, super.key});
