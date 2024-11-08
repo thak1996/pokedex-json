@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:integration/app/modules/home/widgets/pokemon_card.dart';
 import 'package:provider/provider.dart';
 import '../../core/services/pokemon_service.dart';
 import '../../core/theme/app_styles.dart';
 import '../../core/theme/theme_controller.dart';
-import 'widgets/end_drawer.dart';
 import 'home_controller.dart';
 import 'home_state.dart';
 import 'widgets/home_header.dart';
+import 'widgets/pokemon_card.dart';
 import 'widgets/search_header.dart';
 
 class HomePage extends StatelessWidget {
@@ -23,7 +22,7 @@ class HomePage extends StatelessWidget {
         final controller = Provider.of<HomeController>(context);
         return Scaffold(
           backgroundColor: AppStyles.primaryColor,
-          endDrawer: const EndDrawer(),
+          // endDrawer: const EndDrawer(),
           body: Stack(
             children: [
               Column(
@@ -40,7 +39,7 @@ class HomePage extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  top: 0.2.sh,
+                  top: 0.19.sh,
                   left: 6.w,
                   right: 6.w,
                   bottom: 6.h,

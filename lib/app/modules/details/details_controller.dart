@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:integration/app/core/models/pokemon_model.dart';
+import '../../core/models/pokemon_model.dart';
 import '../../core/models/pokemon_type.dart';
 import '../../core/services/pokemon_service.dart';
 import 'details_state.dart';

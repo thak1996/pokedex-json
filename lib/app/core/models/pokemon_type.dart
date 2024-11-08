@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-
 import '../theme/app_styles.dart';
 
 enum PokemonType {

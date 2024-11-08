@@ -9,7 +9,7 @@ class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 8.w, right: 8.w, top: 8.h),
+      padding: EdgeInsets.only(left: 8.w, right: 8.w, top: 16.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -28,12 +28,12 @@ class HomeHeader extends StatelessWidget {
               ),
             ],
           ),
-          Builder(
-            builder: (context) => IconButton(
-              icon: AppIcon.menu(),
-              onPressed: () => Scaffold.of(context).openEndDrawer(),
-            ),
-          ),
+          // Builder(
+          //   builder: (context) => IconButton(
+          //     icon: AppIcon.menu(),
+          //     onPressed: () => Scaffold.of(context).openEndDrawer(),
+          //   ),
+          // ),
         ],
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:integration/app/core/services/pokemon_service.dart';
-import 'package:integration/app/modules/details/details_page.dart';
+import '../../core/services/pokemon_service.dart';
 import 'details_controller.dart';
+import 'details_page.dart';
 
 class DetailsModule extends Module {
   @override
