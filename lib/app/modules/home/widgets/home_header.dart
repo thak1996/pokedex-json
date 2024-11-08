@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/theme/app_styles.dart';
-import 'icon.dart';
+import '../../../core/theme/app_icon.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({
@@ -32,11 +32,7 @@ class HomeHeader extends StatelessWidget {
           ),
           Builder(
             builder: (context) => IconButton(
-              icon: Icon(
-                Icons.menu,
-                size: 30,
-                color: AppStyles.white,
-              ),
+              icon: AppIcon.menu(),
               onPressed: () => Scaffold.of(context).openEndDrawer(),
             ),
           ),
