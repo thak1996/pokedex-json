@@ -9,6 +9,7 @@ import '../../core/theme/theme_controller.dart';
 import 'widgets/end_drawer.dart';
 import 'home_controller.dart';
 import 'home_state.dart';
+import 'widgets/icon.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -27,35 +28,46 @@ class HomePage extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Image.asset(
-                        'assets/images/pokeball.png',
-                        height: 50.h,
-                        fit: BoxFit.fitHeight,
-                      ),
-                      Text(
-                        'Pokedex',
-                        style: AppStyles.headerStyles[Header.headline]
-                            ?.apply(color: Colors.white),
-                      ),
-                      Builder(
-                        builder: (context) => IconButton(
-                          icon: const Icon(
-                            Icons.menu,
-                            size: 30,
-                            color: Colors.white,
-                          ),
-                          onPressed: () => Scaffold.of(context).openEndDrawer(),
+                  Padding(
+                    padding: EdgeInsets.only(left: 8.w, right: 8.w, top: 8.h),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              constraints: BoxConstraints(maxHeight: 40.h),
+                              child: AppIcon.pokeball(color: AppStyles.white),
+                            ),
+                            SizedBox(width: 12.w),
+                            Text(
+                              'Pokedex',
+                              style: AppStyles.headerStyles[Header.headline]
+                                  ?.apply(
+                                color: AppStyles.white,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
+                        Builder(
+                          builder: (context) => IconButton(
+                            icon: Icon(
+                              Icons.menu,
+                              size: 30,
+                              color: AppStyles.white,
+                            ),
+                            onPressed: () =>
+                                Scaffold.of(context).openEndDrawer(),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  top: 100.h,
+                  top: 112.h,
                   left: 6.w,
                   right: 6.w,
                   bottom: 6.h,
@@ -64,10 +76,7 @@ class HomePage extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6.r),
                     boxShadow: AppStyles.outerShadow,
-                    color:
-                        controller.themeController.themeMode == ThemeMode.dark
-                            ? Colors.black
-                            : Colors.white,
+                    color: Theme.of(context).scaffoldBackgroundColor,
                   ),
                   child: SafeArea(
                     child: _buildContent(controller),

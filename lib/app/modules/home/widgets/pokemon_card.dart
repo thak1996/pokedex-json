@@ -60,7 +60,7 @@ class PokemonCard extends StatelessWidget {
                 child: Text(
                   pokemon.name,
                   style: AppStyles.bodyStyles[Body.caption]?.copyWith(
-                    color: Colors.white,
+                    color: AppStyles.white,
                   ),
                 ),
               ),
@@ -78,7 +78,7 @@ class PokemonCard extends StatelessWidget {
                   child: Text(
                     '#$number',
                     style: AppStyles.bodyStyles[Body.caption]?.copyWith(
-                      color: Colors.white,
+                      color: AppStyles.white,
                     ),
                   ),
                 ),
