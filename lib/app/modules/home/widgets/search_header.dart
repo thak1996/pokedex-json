@@ -48,13 +48,9 @@ class SearchHeader extends StatelessWidget {
         borderRadius: BorderRadius.circular(24.r),
         child: InkWell(
           borderRadius: BorderRadius.circular(24.r),
-          onTap: () => showModalBottomSheet(
+          onTap: () => showDialog(
             context: context,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(20.r),
-              ),
-            ),
+            barrierColor: Colors.black.withOpacity(0.5),
             builder: (_) => SortOptionsBottomSheet(
               currentSortType: currentSortType,
               onSortTypeChanged: onSortTypeChanged,
