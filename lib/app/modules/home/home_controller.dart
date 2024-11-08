@@ -62,6 +62,9 @@ class HomeController extends ChangeNotifier {
 
   Future<void> fetchPokemons() async {
     _changeState(HomeLoadingState());
+    // await Future.delayed(const Duration(seconds: 2));
+    // _changeState(HomeErrorState('Network connection failed'));
+    // return;
     final result = await _pokemonService.getPokemons();
     result.fold(
       (failure) => _changeState(HomeErrorState(failure.message)),

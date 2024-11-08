@@ -66,21 +66,16 @@ class HomePage extends StatelessWidget {
       case const (HomeLoadingState):
         return const Center(child: CircularProgressIndicator());
       case const (HomeErrorState):
-        return Center(child: Text((state as HomeErrorState).message));
-      case const (HomeEmptyState):
         return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset('assets/images/pikachu_triste.png'),
-              SizedBox(height: 16.h),
-              Text(
-                (state as HomeEmptyState).message,
-                textAlign: TextAlign.center,
-                style: AppStyles.bodyStyles[Body.body1],
-              ),
-            ],
+          child: Text(
+            (state as HomeErrorState).message,
+            style: AppStyles.headerStyles[Header.subTitle1],
           ),
+        );
+      case const (HomeEmptyState):
+        return EmptyState(
+          state: state,
+          text: (state as HomeEmptyState).message,
         );
       case const (HomeSuccessState):
       default:
@@ -102,5 +97,34 @@ class HomePage extends StatelessWidget {
           },
         );
     }
+  }
+}
+
+class EmptyState extends StatelessWidget {
+  const EmptyState({
+    super.key,
+    required this.state,
+    required this.text,
+  });
+
+  final HomeState state;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset('assets/images/pikachu_triste.png'),
+          SizedBox(height: 16.h),
+          Text(
+            text,
+            textAlign: TextAlign.center,
+            style: AppStyles.bodyStyles[Body.body1],
+          ),
+        ],
+      ),
+    );
   }
 }
