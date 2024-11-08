@@ -15,7 +15,6 @@ class AppIcon {
     double? height,
     double? width,
     Color? color,
-    AssetImage? assetImage,
   }) {
     return SvgPicture.asset(
       'assets/icons/pokeball.svg',
@@ -26,20 +25,52 @@ class AppIcon {
   }
 
   static Widget menu({
+    double? size,
+    Color? color,
+  }) {
+    return Icon(
+      Icons.menu,
+      size: size ?? 32.h,
+      color: color ?? AppStyles.white,
+    );
+  }
+
+  static Widget search({
     double? height,
     double? width,
     Color? color,
   }) {
-    return Transform.scale(
-      scaleY: -1,
-      child: Transform.rotate(
-        angle: 2 * (3.14159 / 2),
+    height ??= 32.h;
+    width ??= 32.w;
+    return SizedBox(
+      height: height,
+      width: width,
+      child: Center(
         child: SvgPicture.asset(
-          'assets/icons/sort.svg',
-          height: height ?? defaultHeight,
-          width: width ?? defaultWidth,
-          colorFilter: _getColorFilter(color),
+          'assets/icons/search.svg',
+          height: height,
+          width: width,
+          colorFilter: ColorFilter.mode(
+            color ?? AppStyles.primaryColor,
+            BlendMode.srcIn,
+          ),
         ),
+      ),
+    );
+  }
+
+  static Widget filter({
+    double? height,
+    double? width,
+    Color? color,
+  }) {
+    return SvgPicture.asset(
+      'assets/icons/sort.svg',
+      height: height ?? 32.h,
+      width: width ?? 32.w,
+      colorFilter: ColorFilter.mode(
+        color ?? AppStyles.primaryColor,
+        BlendMode.srcIn,
       ),
     );
   }

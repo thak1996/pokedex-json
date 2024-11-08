@@ -4,12 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:integration/app/modules/home/widgets/pokemon_card.dart';
 import 'package:provider/provider.dart';
 import '../../core/services/pokemon_service.dart';
+import '../../core/theme/app_icon.dart';
 import '../../core/theme/app_styles.dart';
 import '../../core/theme/theme_controller.dart';
 import 'widgets/end_drawer.dart';
 import 'home_controller.dart';
 import 'home_state.dart';
 import 'widgets/home_header.dart';
+import 'widgets/search_header.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -30,30 +32,8 @@ class HomePage extends StatelessWidget {
                 children: [
                   const HomeHeader(),
                   SizedBox(height: 12.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          onChanged: (value) => controller.searchPokemon(value),
-                          decoration: InputDecoration(
-                            hintText: 'Search Pokemon',
-                            hintStyle: TextStyle(color: AppStyles.white),
-                            prefixIcon:
-                                Icon(Icons.search, color: AppStyles.white),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: AppStyles.white),
-                              borderRadius: BorderRadius.circular(8.r),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: AppStyles.white),
-                              borderRadius: BorderRadius.circular(8.r),
-                            ),
-                          ),
-                          style: TextStyle(color: AppStyles.white),
-                        ),
-                      ),
-                    ],
+                  SearchHeader(
+                    onChanged: (value) => controller.searchPokemon(value),
                   ),
                 ],
               ),

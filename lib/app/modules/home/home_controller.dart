@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:integration/app/core/models/pokemon_type.dart';
-import 'package:integration/app/core/theme/theme_controller.dart';
 import '../../core/models/pokemon_model.dart';
+import '../../core/models/pokemon_type.dart';
 import '../../core/services/pokemon_service.dart';
+import '../../core/theme/theme_controller.dart';
 import 'home_state.dart';
 
 class HomeController extends ChangeNotifier {
@@ -20,9 +20,9 @@ class HomeController extends ChangeNotifier {
   final PokemonService _pokemonService;
   final ThemeController _themeController;
 
-  HomeState _state = HomeInitialState();
   List<Pokemon> _allPokemons = [];
   List<Pokemon> _filteredPokemons = [];
+  HomeState _state = HomeInitialState();
 
   void _changeState(HomeState newState) {
     _state = newState;
@@ -31,8 +31,14 @@ class HomeController extends ChangeNotifier {
 
   List<Pokemon> get pokemons =>
       _state is HomeSuccessState<Pokemon> ? _filteredPokemons : [];
+
   HomeState get state => _state;
   ThemeController get themeController => _themeController;
+
+  void clearSearch() {
+    _filteredPokemons = _allPokemons;
+    _changeState(HomeSuccessState(_filteredPokemons));
+  }
 
   Future<void> fetchPokemons() async {
     _changeState(HomeLoadingState());
@@ -46,6 +52,8 @@ class HomeController extends ChangeNotifier {
       },
     );
   }
+
+  Color getCardBackgroundColor(String type) => PokemonTypeInfo.getColor(type);
 
   void searchPokemon(String query) {
     if (query.isEmpty) {
@@ -70,11 +78,4 @@ class HomeController extends ChangeNotifier {
       _changeState(HomeSuccessState(_filteredPokemons));
     }
   }
-
-  void clearSearch() {
-    _filteredPokemons = _allPokemons;
-    _changeState(HomeSuccessState(_filteredPokemons));
-  }
-
-  Color getCardBackgroundColor(String type) => PokemonTypeInfo.getColor(type);
 }
