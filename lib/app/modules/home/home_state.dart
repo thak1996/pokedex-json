@@ -1,3 +1,9 @@
+class HomeEmptyState extends HomeState {
+  HomeEmptyState(this.message);
+
+  final String message;
+}
+
 class HomeErrorState extends HomeState {
   HomeErrorState(this.message);
 

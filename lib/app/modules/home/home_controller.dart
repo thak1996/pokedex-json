@@ -52,21 +52,27 @@ class HomeController extends ChangeNotifier {
 
     if (query.isEmpty) {
       _filteredPokemons = _allPokemons;
-    } else {
-      _filteredPokemons = _allPokemons.where((pokemon) {
-        final name = pokemon.name.toLowerCase();
-        final searchLower = query.toLowerCase();
-        final number = pokemon.id.toString();
-
-        return name.contains(searchLower) ||
-            number.contains(searchLower) ||
-            pokemon.type.any((type) {
-              return type.toLowerCase().contains(searchLower);
-            });
-      }).toList();
+      _changeState(HomeSuccessState(_filteredPokemons));
+      return;
     }
 
-    _changeState(HomeSuccessState(_filteredPokemons));
+    _filteredPokemons = _allPokemons.where((pokemon) {
+      final name = pokemon.name.toLowerCase();
+      final searchLower = query.toLowerCase();
+      final number = pokemon.id.toString();
+
+      return name.contains(searchLower) ||
+          number.contains(searchLower) ||
+          pokemon.type.any((type) {
+            return type.toLowerCase().contains(searchLower);
+          });
+    }).toList();
+
+    if (_filteredPokemons.isEmpty) {
+      _changeState(HomeEmptyState('Pokemon não encontrado'));
+    } else {
+      _changeState(HomeSuccessState(_filteredPokemons));
+    }
   }
 
   void clearSearch() {

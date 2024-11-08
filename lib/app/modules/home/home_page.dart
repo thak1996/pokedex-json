@@ -39,7 +39,8 @@ class HomePage extends StatelessWidget {
                           decoration: InputDecoration(
                             hintText: 'Search Pokemon',
                             hintStyle: TextStyle(color: AppStyles.white),
-                            prefixIcon: Icon(Icons.search, color: AppStyles.white),
+                            prefixIcon:
+                                Icon(Icons.search, color: AppStyles.white),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: AppStyles.white),
                               borderRadius: BorderRadius.circular(8.r),
@@ -86,6 +87,21 @@ class HomePage extends StatelessWidget {
         return const Center(child: CircularProgressIndicator());
       case const (HomeErrorState):
         return Center(child: Text((state as HomeErrorState).message));
+      case const (HomeEmptyState):
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset('assets/images/pikachu_triste.png'),
+              SizedBox(height: 16.h),
+              Text(
+                (state as HomeEmptyState).message,
+                textAlign: TextAlign.center,
+                style: AppStyles.bodyStyles[Body.body1],
+              ),
+            ],
+          ),
+        );
       case const (HomeSuccessState):
       default:
         final pokemons = controller.pokemons;
