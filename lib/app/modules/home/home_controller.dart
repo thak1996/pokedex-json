@@ -21,13 +21,16 @@ class HomeController extends ChangeNotifier {
   final ThemeController _themeController;
 
   HomeState _state = HomeInitialState();
+  List<Pokemon> _allPokemons = [];
+  List<Pokemon> _filteredPokemons = [];
 
   void _changeState(HomeState newState) {
     _state = newState;
     notifyListeners();
   }
 
-  List<Pokemon> get pokemons => (_state as HomeSuccessState<Pokemon>).data;
+  List<Pokemon> get pokemons =>
+      _state is HomeSuccessState<Pokemon> ? _filteredPokemons : [];
   HomeState get state => _state;
   ThemeController get themeController => _themeController;
 
@@ -36,8 +39,39 @@ class HomeController extends ChangeNotifier {
     final result = await _pokemonService.getPokemons();
     result.fold(
       (failure) => _changeState(HomeErrorState(failure.message)),
-      (data) => _changeState(HomeSuccessState(data.pokemon)),
+      (data) {
+        _allPokemons = data.pokemon;
+        _filteredPokemons = _allPokemons;
+        _changeState(HomeSuccessState(_filteredPokemons));
+      },
     );
+  }
+
+  void searchPokemon(String query) {
+    if (_state is! HomeSuccessState<Pokemon>) return;
+
+    if (query.isEmpty) {
+      _filteredPokemons = _allPokemons;
+    } else {
+      _filteredPokemons = _allPokemons.where((pokemon) {
+        final name = pokemon.name.toLowerCase();
+        final searchLower = query.toLowerCase();
+        final number = pokemon.id.toString();
+
+        return name.contains(searchLower) ||
+            number.contains(searchLower) ||
+            pokemon.type.any((type) {
+              return type.toLowerCase().contains(searchLower);
+            });
+      }).toList();
+    }
+
+    _changeState(HomeSuccessState(_filteredPokemons));
+  }
+
+  void clearSearch() {
+    _filteredPokemons = _allPokemons;
+    _changeState(HomeSuccessState(_filteredPokemons));
   }
 
   Color getCardBackgroundColor(String type) => PokemonTypeInfo.getColor(type);

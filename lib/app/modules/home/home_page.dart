@@ -25,13 +25,40 @@ class HomePage extends StatelessWidget {
           endDrawer: const EndDrawer(),
           body: Stack(
             children: [
-              const Column(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: [HomeHeader()],
+                children: [
+                  const HomeHeader(),
+                  SizedBox(height: 12.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          onChanged: (value) => controller.searchPokemon(value),
+                          decoration: InputDecoration(
+                            hintText: 'Search Pokemon',
+                            hintStyle: TextStyle(color: AppStyles.white),
+                            prefixIcon: Icon(Icons.search, color: AppStyles.white),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: AppStyles.white),
+                              borderRadius: BorderRadius.circular(8.r),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: AppStyles.white),
+                              borderRadius: BorderRadius.circular(8.r),
+                            ),
+                          ),
+                          style: TextStyle(color: AppStyles.white),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  top: 112.h,
+                  top: 0.2.sh,
                   left: 6.w,
                   right: 6.w,
                   bottom: 6.h,
@@ -42,9 +69,7 @@ class HomePage extends StatelessWidget {
                     boxShadow: AppStyles.outerShadow,
                     color: Theme.of(context).scaffoldBackgroundColor,
                   ),
-                  child: SafeArea(
-                    child: _buildContent(controller),
-                  ),
+                  child: SafeArea(child: _buildContent(controller)),
                 ),
               ),
             ],

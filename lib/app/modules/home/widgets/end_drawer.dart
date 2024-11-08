@@ -3,9 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:integration/app/core/theme/widgets/theme_switch_button.dart';
 
 class EndDrawer extends StatelessWidget {
-  const EndDrawer({
-    super.key,
-  });
+  const EndDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {

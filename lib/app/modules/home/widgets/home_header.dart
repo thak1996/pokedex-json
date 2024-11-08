@@ -4,9 +4,7 @@ import '../../../core/theme/app_styles.dart';
 import '../../../core/theme/app_icon.dart';
 
 class HomeHeader extends StatelessWidget {
-  const HomeHeader({
-    super.key,
-  });
+  const HomeHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
