@@ -60,9 +60,9 @@ class DetailsPage extends StatelessWidget {
             Container(
               height: 0.65.sh,
               padding: EdgeInsets.only(
-                left: 16.w,
-                right: 16.w,
-                bottom: 16.h,
+                left: 20.w,
+                right: 20.w,
+                bottom: 20.h,
                 top: 80.h,
               ),
               margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
@@ -87,7 +87,16 @@ class DetailsPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  InfoPokemon(pokemonDetails: pokemonDetails),
+                  WeightHeightPokemon(pokemonDetails: pokemonDetails),
+                  SizedBox(height: 16.h),
+                  Text(
+                    pokemonDetails.description,
+                    textAlign: TextAlign.center,
+                    style: AppStyles.bodyStyles[Body.body3]?.apply(
+                      color: AppStyles.grayDark,
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
                 ],
               ),
             ),
