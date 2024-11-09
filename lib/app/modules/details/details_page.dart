@@ -60,27 +60,33 @@ class DetailsPage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                  icon: AppIcon.back(),
-                  onPressed: () {
-                    if (currentIndex > 0) {
-                      Modular.to.pushReplacementNamed(
-                        '/details/${pokemons[currentIndex - 1].id}',
-                        arguments: {'pokemons': pokemons},
-                      );
-                    }
-                  },
+                Visibility(
+                  visible: currentIndex > 0,
+                  child: IconButton(
+                    icon: AppIcon.back(),
+                    onPressed: () {
+                      if (currentIndex > 0) {
+                        Modular.to.pushReplacementNamed(
+                          '/details/${pokemons[currentIndex - 1].id}',
+                          arguments: {'pokemons': pokemons},
+                        );
+                      }
+                    },
+                  ),
                 ),
-                IconButton(
-                  icon: AppIcon.forward(),
-                  onPressed: () {
-                    if (currentIndex < pokemons.length - 1) {
-                      Modular.to.pushReplacementNamed(
-                        '/details/${pokemons[currentIndex + 1].id}',
-                        arguments: {'pokemons': pokemons},
-                      );
-                    }
-                  },
+                Visibility(
+                  visible: currentIndex < pokemons.length - 1,
+                  child: IconButton(
+                    icon: AppIcon.forward(),
+                    onPressed: () {
+                      if (currentIndex < pokemons.length - 1) {
+                        Modular.to.pushReplacementNamed(
+                          '/details/${pokemons[currentIndex + 1].id}',
+                          arguments: {'pokemons': pokemons},
+                        );
+                      }
+                    },
+                  ),
                 ),
               ],
             ),
