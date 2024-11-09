@@ -53,6 +53,14 @@ class DetailsPage extends StatelessWidget {
       case const (DetailsSuccessState):
       default:
         final pokemonDetails = (state as DetailsSuccessState).pokemon;
+        final List<Map<String, dynamic>> statsList = [
+          {"label": "HP", "value": pokemonDetails.stats.hp},
+          {"label": "ATK", "value": pokemonDetails.stats.attack},
+          {"label": "DEF", "value": pokemonDetails.stats.defense},
+          {"label": "SATK", "value": pokemonDetails.stats.specialAttack},
+          {"label": "SDEF", "value": pokemonDetails.stats.specialDefense},
+          {"label": "SPD", "value": pokemonDetails.stats.speed},
+        ];
         return Stack(
           alignment: Alignment.bottomCenter,
           children: [
@@ -109,53 +117,17 @@ class DetailsPage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 16.h),
-                      StatsWidget(
-                        label: "HP",
-                        value: pokemonDetails.stats.hp,
-                        maxValue: 200, // Defina o valor máximo
-                        color: controller
-                            .getCardBackgroundColor(pokemonDetails.type.first),
-                      ),
-                      SizedBox(height: 8.h),
-                      StatsWidget(
-                        label: "ATK",
-                        value: pokemonDetails.stats.attack,
-                        maxValue: 200,
-                        color: controller
-                            .getCardBackgroundColor(pokemonDetails.type.first),
-                      ),
-                      SizedBox(height: 8.h),
-                      StatsWidget(
-                        label: "DEF",
-                        value: pokemonDetails.stats.defense,
-                        maxValue: 200,
-                        color: controller
-                            .getCardBackgroundColor(pokemonDetails.type.first),
-                      ),
-                      SizedBox(height: 8.h),
-                      StatsWidget(
-                        label: "SATK",
-                        value: pokemonDetails.stats.specialAttack,
-                        maxValue: 200,
-                        color: controller
-                            .getCardBackgroundColor(pokemonDetails.type.first),
-                      ),
-                      SizedBox(height: 8.h),
-                      StatsWidget(
-                        label: "SDEF",
-                        value: pokemonDetails.stats.specialDefense,
-                        maxValue: 200,
-                        color: controller
-                            .getCardBackgroundColor(pokemonDetails.type.first),
-                      ),
-                      SizedBox(height: 8.h),
-                      StatsWidget(
-                        label: "SPD",
-                        value: pokemonDetails.stats.speed,
-                        maxValue: 200,
-                        color: controller
-                            .getCardBackgroundColor(pokemonDetails.type.first),
-                      ),
+                      for (var stat in statsList) ...[
+                        StatsWidget(
+                          label: stat["label"],
+                          value: stat["value"],
+                          maxValue: 200,
+                          color: controller.getCardBackgroundColor(
+                            pokemonDetails.type.first,
+                          ),
+                        ),
+                        SizedBox(height: 8.h),
+                      ],
                     ],
                   )
                 ],
