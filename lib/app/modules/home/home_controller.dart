@@ -101,7 +101,7 @@ class HomeController extends ChangeNotifier {
     }).toList();
     _filteredPokemons = filteredList;
     if (_filteredPokemons.isEmpty) {
-      _changeState(HomeEmptyState('Pokemon não encontrado'));
+      _changeState(HomeEmptyState('Pokemon not found.'));
     } else {
       _changeState(HomeSuccessState(_filteredPokemons));
     }

@@ -18,7 +18,9 @@ class EmptyStateText extends StatelessWidget {
           Text(
             text,
             textAlign: TextAlign.center,
-            style: AppStyles.bodyStyles[Body.body1],
+            style: AppStyles.bodyStyles[Body.body1]?.apply(
+              color: AppStyles.primaryColor,
+            ),
           ),
         ],
       ),
