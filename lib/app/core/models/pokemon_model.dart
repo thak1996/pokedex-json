@@ -22,18 +22,58 @@ class Evolution {
   }
 }
 
+class Stats {
+  Stats({
+    required this.hp,
+    required this.attack,
+    required this.defense,
+    required this.specialAttack,
+    required this.specialDefense,
+    required this.speed,
+  });
+
+  factory Stats.fromJson(Map<String, dynamic> json) {
+    return Stats(
+      hp: json['hp'] as int,
+      attack: json['attack'] as int,
+      defense: json['defense'] as int,
+      specialAttack: json['special_attack'] as int,
+      specialDefense: json['special_defense'] as int,
+      speed: json['speed'] as int,
+    );
+  }
+
+  final int hp;
+  final int attack;
+  final int defense;
+  final int specialAttack;
+  final int specialDefense;
+  final int speed;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'hp': hp,
+      'attack': attack,
+      'defense': defense,
+      'special_attack': specialAttack,
+      'special_defense': specialDefense,
+      'speed': speed,
+    };
+  }
+}
+
 class Pokemon {
   factory Pokemon.fromJson(Map<String, dynamic> json) {
     return Pokemon(
       id: json['id'] as int,
       num: json['num'] as String,
       name: json['name'] as String,
+      description: json['description'] as String,
       img: json['img'] as String,
       type: List<String>.from(json['type']),
       height: json['height'] as String,
       weight: json['weight'] as String,
       candy: json['candy'] as String,
-      candyCount: json['candy_count'] as int?,
       egg: json['egg'] as String,
       spawnChance: (json['spawn_chance'] as dynamic).toDouble(),
       avgSpawns: (json['avg_spawns'] as dynamic).toDouble(),
@@ -43,6 +83,7 @@ class Pokemon {
               json['multipliers'].map((x) => (x as dynamic).toDouble()))
           : null,
       weaknesses: List<String>.from(json['weaknesses']),
+      stats: Stats.fromJson(json['stats']),
       prevEvolution: json['prev_evolution'] != null
           ? List<Evolution>.from(
               json['prev_evolution'].map((x) => Evolution.fromJson(x)))
@@ -58,12 +99,12 @@ class Pokemon {
     required this.id,
     required this.num,
     required this.name,
+    required this.description,
     required this.img,
     required this.type,
     required this.height,
     required this.weight,
     required this.candy,
-    this.candyCount,
     required this.egg,
     required this.spawnChance,
     required this.avgSpawns,
@@ -72,37 +113,39 @@ class Pokemon {
     required this.weaknesses,
     this.prevEvolution,
     this.nextEvolution,
+    required this.stats,
   });
 
-  final double avgSpawns;
-  final String candy;
-  final int? candyCount;
-  final String egg;
-  final String height;
   final int id;
-  final String img;
-  final List<double>? multipliers;
-  final String name;
-  final List<Evolution>? nextEvolution;
   final String num;
-  final List<Evolution>? prevEvolution;
-  final double spawnChance;
-  final String spawnTime;
+  final String name;
+  final String description;
+  final String img;
   final List<String> type;
-  final List<String> weaknesses;
+  final String height;
   final String weight;
+  final String candy;
+  final String egg;
+  final double spawnChance;
+  final double avgSpawns;
+  final String spawnTime;
+  final List<double>? multipliers;
+  final List<String> weaknesses;
+  final List<Evolution>? prevEvolution;
+  final List<Evolution>? nextEvolution;
+  final Stats stats;
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'num': num,
       'name': name,
+      'description': description,
       'img': img,
       'type': type,
       'height': height,
       'weight': weight,
       'candy': candy,
-      'candy_count': candyCount,
       'egg': egg,
       'spawn_chance': spawnChance,
       'avg_spawns': avgSpawns,
@@ -111,6 +154,7 @@ class Pokemon {
       'weaknesses': weaknesses,
       'prev_evolution': prevEvolution?.map((e) => e.toJson()).toList(),
       'next_evolution': nextEvolution?.map((e) => e.toJson()).toList(),
+      'stats': stats.toJson(),
     };
   }
 }

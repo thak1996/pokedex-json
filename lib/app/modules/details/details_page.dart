@@ -87,7 +87,7 @@ class DetailsPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  PokemonInfos(pokemonDetails: pokemonDetails),
+                  InfoPokemon(pokemonDetails: pokemonDetails),
                 ],
               ),
             ),

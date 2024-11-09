@@ -5,8 +5,8 @@ import '../../../core/theme/app_icon.dart';
 import '../../../core/theme/app_styles.dart';
 import 'info_divider.dart';
 
-class PokemonInfos extends StatelessWidget {
-  const PokemonInfos({super.key, required this.pokemonDetails});
+class InfoPokemon extends StatelessWidget {
+  const InfoPokemon({super.key, required this.pokemonDetails});
 
   final Pokemon pokemonDetails;
 
