@@ -9,6 +9,7 @@ import 'details_controller.dart';
 import 'details_state.dart';
 import 'package:provider/provider.dart';
 import 'widgets/info_pokemon.dart';
+import 'widgets/stats_widget.dart';
 import 'widgets/type_widget.dart';
 
 class DetailsPage extends StatelessWidget {
@@ -97,6 +98,66 @@ class DetailsPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 16.h),
+                  Column(
+                    children: [
+                      Text(
+                        "Base Stats",
+                        style: AppStyles.headerStyles[Header.subTitle1]?.apply(
+                          color: controller.getCardBackgroundColor(
+                            pokemonDetails.type.first,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 16.h),
+                      StatsWidget(
+                        label: "HP",
+                        value: pokemonDetails.stats.hp,
+                        maxValue: 200, // Defina o valor máximo
+                        color: controller
+                            .getCardBackgroundColor(pokemonDetails.type.first),
+                      ),
+                      SizedBox(height: 8.h),
+                      StatsWidget(
+                        label: "ATK",
+                        value: pokemonDetails.stats.attack,
+                        maxValue: 200,
+                        color: controller
+                            .getCardBackgroundColor(pokemonDetails.type.first),
+                      ),
+                      SizedBox(height: 8.h),
+                      StatsWidget(
+                        label: "DEF",
+                        value: pokemonDetails.stats.defense,
+                        maxValue: 200,
+                        color: controller
+                            .getCardBackgroundColor(pokemonDetails.type.first),
+                      ),
+                      SizedBox(height: 8.h),
+                      StatsWidget(
+                        label: "SATK",
+                        value: pokemonDetails.stats.specialAttack,
+                        maxValue: 200,
+                        color: controller
+                            .getCardBackgroundColor(pokemonDetails.type.first),
+                      ),
+                      SizedBox(height: 8.h),
+                      StatsWidget(
+                        label: "SDEF",
+                        value: pokemonDetails.stats.specialDefense,
+                        maxValue: 200,
+                        color: controller
+                            .getCardBackgroundColor(pokemonDetails.type.first),
+                      ),
+                      SizedBox(height: 8.h),
+                      StatsWidget(
+                        label: "SPD",
+                        value: pokemonDetails.stats.speed,
+                        maxValue: 200,
+                        color: controller
+                            .getCardBackgroundColor(pokemonDetails.type.first),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
