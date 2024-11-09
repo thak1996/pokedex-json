@@ -90,6 +90,25 @@ class AppIcon {
     );
   }
 
+  static Widget forward({
+    double? height,
+    double? width,
+    Color? color,
+  }) {
+    return Transform.rotate(
+      angle: 3.14159,
+      child: SvgPicture.asset(
+        'assets/icons/arrow_back.svg',
+        height: height ?? 32.h,
+        width: width ?? 32.w,
+        colorFilter: ColorFilter.mode(
+          color ?? AppStyles.white,
+          BlendMode.srcIn,
+        ),
+      ),
+    );
+  }
+
   static Widget weight({
     double? height,
     double? width,

@@ -47,11 +47,45 @@ class DetailsPage extends StatelessWidget {
       {"label": "SDEF", "value": pokemonDetails.stats.specialDefense},
       {"label": "SPD", "value": pokemonDetails.stats.speed},
     ];
+
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
         _backgroundPokeball(),
         _headerDetails(pokemonDetails),
+        Padding(
+          padding: EdgeInsets.only(top: 0.25.sh, left: 22.w, right: 22.w),
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  icon: AppIcon.back(),
+                  onPressed: () {
+                    if (currentIndex > 0) {
+                      Modular.to.pushReplacementNamed(
+                        '/details/${pokemons[currentIndex - 1].id}',
+                        arguments: {'pokemons': pokemons},
+                      );
+                    }
+                  },
+                ),
+                IconButton(
+                  icon: AppIcon.forward(),
+                  onPressed: () {
+                    if (currentIndex < pokemons.length - 1) {
+                      Modular.to.pushReplacementNamed(
+                        '/details/${pokemons[currentIndex + 1].id}',
+                        arguments: {'pokemons': pokemons},
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
         Container(
           height: 0.65.sh,
           padding: EdgeInsets.only(

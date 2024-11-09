@@ -34,7 +34,7 @@ class StatsWidget extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 8.w),
         ),
         SizedBox(
-          width: 20.w,
+          width: 30.w,
           child: Text(
             value.toString(),
             style: AppStyles.bodyStyles[Body.body2],
