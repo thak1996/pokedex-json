@@ -34,8 +34,11 @@ class MyController extends ChangeNotifier {
 
 ## Demonstração
 
-<img src="/assets/img/arquivo.gif">
-<img src="/assets/img/arquivo.gif">
+<img src="/assets/readme/home.jpg">
+<img src="/assets/readme/details.jpg">
+<img src="/assets/readme/not_found.jpg">
+<img src="/assets/readme/sort_name.jpg">
+<img src="/assets/readme/sort_number.jpg">
 
 ## Instalação
 
