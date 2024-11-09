@@ -7,25 +7,13 @@ class InfoDivider extends StatelessWidget {
     super.key,
     this.height,
     this.color,
-    this.isLarge = false,
   });
 
   final double? height;
   final Color? color;
-  final bool isLarge;
 
   @override
   Widget build(BuildContext context) {
-    if (isLarge) {
-      return IntrinsicHeight(
-        child: VerticalDivider(
-          color: color ?? AppStyles.grayDark,
-          thickness: 1,
-          width: 32.w,
-        ),
-      );
-    }
-
     return SizedBox(
       height: height ?? 40.h,
       child: VerticalDivider(
