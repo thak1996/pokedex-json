@@ -89,4 +89,36 @@ class AppIcon {
       ),
     );
   }
+
+  static Widget weight({
+    double? height,
+    double? width,
+    Color? color,
+  }) {
+    return SvgPicture.asset(
+      'assets/icons/weight.svg',
+      height: height ?? 16.h,
+      width: width ?? 16.w,
+      colorFilter: ColorFilter.mode(
+        color ?? AppStyles.grayDark,
+        BlendMode.srcIn,
+      ),
+    );
+  }
+
+  static Widget height({
+    double? height,
+    double? width,
+    Color? color,
+  }) {
+    return SvgPicture.asset(
+      'assets/icons/straighten.svg',
+      height: height ?? 16.h,
+      width: width ?? 16.w,
+      colorFilter: ColorFilter.mode(
+        color ?? AppStyles.grayDark,
+        BlendMode.srcIn,
+      ),
+    );
+  }
 }

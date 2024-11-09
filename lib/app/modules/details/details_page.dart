@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:integration/app/core/models/pokemon_model.dart';
 import 'package:integration/app/core/theme/app_icon.dart';
+import 'package:integration/app/modules/details/widgets/info_divider.dart';
 import '../../core/services/pokemon_service.dart';
 import '../../core/theme/app_styles.dart';
 import 'details_controller.dart';
 import 'details_state.dart';
 import 'package:provider/provider.dart';
-
 import 'widgets/type_widget.dart';
 
 class DetailsPage extends StatelessWidget {
@@ -78,6 +77,80 @@ class DetailsPage extends StatelessWidget {
                   TypeWidget(
                     pokemonDetails: pokemonDetails,
                     getTypeColor: controller.getCardBackgroundColor,
+                  ),
+                  SizedBox(height: 16.h),
+                  Text(
+                    "About",
+                    style: AppStyles.headerStyles[Header.subTitle1]?.apply(
+                      color: controller.getCardBackgroundColor(
+                        pokemonDetails.type.first,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 8.w, vertical: 16.h),
+                    child: Wrap(
+                      runAlignment: WrapAlignment.center,
+                      runSpacing: 16.h,
+                      spacing: 16.w,
+                      alignment: WrapAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                AppIcon.weight(),
+                                SizedBox(width: 8.w),
+                                Text(
+                                  pokemonDetails.weight,
+                                  style:
+                                      AppStyles.bodyStyles[Body.body3]?.apply(
+                                    color: AppStyles.grayDark,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 4.h),
+                            Text(
+                              "Weight",
+                              style: AppStyles.bodyStyles[Body.caption]?.apply(
+                                color: AppStyles.grayMedium,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const InfoDivider(isLarge: true),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                AppIcon.height(),
+                                SizedBox(width: 8.w),
+                                Text(
+                                  pokemonDetails.height,
+                                  style:
+                                      AppStyles.bodyStyles[Body.body3]?.apply(
+                                    color: AppStyles.grayDark,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 4.h),
+                            Text(
+                              "Height",
+                              style: AppStyles.bodyStyles[Body.caption]?.apply(
+                                color: AppStyles.grayMedium,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
