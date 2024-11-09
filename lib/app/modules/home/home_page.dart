@@ -79,7 +79,10 @@ class HomePage extends StatelessWidget {
           itemBuilder: (context, index) {
             final pokemon = pokemons[index];
             return PokemonCard(
-              onTap: () => Modular.to.pushNamed('/details/${pokemon.id}'),
+              onTap: () => Modular.to.pushNamed(
+                '/details/${pokemon.id}',
+                arguments: {'pokemons': pokemons, 'currentIndex': index},
+              ),
               pokemon: pokemon,
             );
           },

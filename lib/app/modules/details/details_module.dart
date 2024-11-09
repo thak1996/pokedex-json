@@ -18,7 +18,12 @@ class DetailsModule extends Module {
       '/:id',
       child: (context) {
         final pokemonId = int.parse(r.args.params['id']);
-        return DetailsPage(pokemonId: pokemonId);
+        final pokemons = Modular.args.data['pokemons'];
+        final currentIndex = pokemons.indexWhere((pokemon) => pokemon.id == pokemonId);
+        return DetailsPage(
+          pokemons: pokemons,
+          currentIndex: currentIndex,
+        );
       },
     );
   }
