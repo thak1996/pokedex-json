@@ -73,4 +73,20 @@ class AppIcon {
       ),
     );
   }
+
+  static Widget back({
+    double? height,
+    double? width,
+    Color? color,
+  }) {
+    return SvgPicture.asset(
+      'assets/icons/arrow_back.svg',
+      height: height ?? 32.h,
+      width: width ?? 32.w,
+      colorFilter: ColorFilter.mode(
+        color ?? AppStyles.white,
+        BlendMode.srcIn,
+      ),
+    );
+  }
 }
