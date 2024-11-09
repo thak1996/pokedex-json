@@ -34,11 +34,13 @@ class MyController extends ChangeNotifier {
 
 ## Demonstração
 
-<img src="/assets/readme/home.jpg">
-<img src="/assets/readme/details.jpg">
-<img src="/assets/readme/not_found.jpg">
-<img src="/assets/readme/sort_name.jpg">
-<img src="/assets/readme/sort_number.jpg">
+<div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+    <img src="/assets/readme/home.jpg" alt="Home" style="width: 200px; height: auto; margin: 10px;">
+    <img src="/assets/readme/details.jpg" alt="Details" style="width: 200px; height: auto; margin: 10px;">
+    <img src="/assets/readme/not_found.jpg" alt="Not Found" style="width: 200px; height: auto; margin: 10px;">
+    <img src="/assets/readme/sort_name.jpg" alt="Sort by Name" style="width: 200px; height: auto; margin: 10px;">
+    <img src="/assets/readme/sort_number.jpg" alt="Sort by Number" style="width: 200px; height: auto; margin: 10px;">
+</div>
 
 ## Instalação
 
