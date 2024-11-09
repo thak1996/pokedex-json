@@ -1,16 +1,67 @@
-# integration
+# Integração
 
-A new Flutter project.
+Pokedex com integração de arquivo json.
 
-## Getting Started
+## Descrição
 
-This project is a starting point for a Flutter application.
+Projeto criado com simulação de integração API, utilizando diversas ferramentas para tratamento de dados.
 
-A few resources to get you started if this is your first Flutter project:
+## Pacotes Utilizados
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+-   **provider**: Para gerenciamento de estado.
+-   **http**: Para fazer requisições HTTP.
+-   **cached_network_image**: Para carregar imagens de forma eficiente.
+-   **flutter_modular**: Para gerenciamento de rotas e dependências.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Construção do Estado das Telas
+
+Este projeto utiliza o padrão **ChangeNotifier** do pacote `provider` para gerenciar o estado das telas. As classes de controle (controllers) são responsáveis por atualizar o estado e notificar os widgets que dependem desse estado.
+
+### Exemplo de Uso
+
+```
+dart
+class MyController extends ChangeNotifier {
+    String data;
+    String get data => data;
+    void fetchData() {
+        // Lógica para buscar dados
+        data = "Dados carregados";
+        notifyListeners();
+    }
+}
+```
+
+## Demonstração
+
+<img src="/assets/img/arquivo.gif">
+<img src="/assets/img/arquivo.gif">
+
+## Instalação
+
+Para começar a usar este projeto, siga os passos abaixo:
+
+1. Clone o repositório:
+    ```bash
+    git clone git@github.com:thak1996/integration.git
+    ```
+2. Navegue até o diretório do projeto:
+    ```bash
+    cd integration
+    ```
+3. Instale as dependências:
+    ```bash
+    flutter pub get
+    ```
+4. Execute o aplicativo:
+    ```bash
+    flutter run
+    ```
+
+## Autor
+
+**Franklyn Viana dos Santos** - [Seu GitHub](https://github.com/thak1996)
+
+## Contribuições
+
+Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou enviar um pull request.
