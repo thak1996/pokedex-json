@@ -36,7 +36,7 @@ class PokemonService {
   Future<DataResult<PokemonResponse>> getPokemons() async {
     try {
       await Future.delayed(const Duration(seconds: 2));
-      final result = await _httpService.get('/pokedex.json');      
+      final result = await _httpService.get('/pokedex.json');
       return result.fold(
         (failure) => DataResult.failure(failure),
         (data) {
@@ -45,7 +45,7 @@ class PokemonService {
               code: 204,
               errorType: APIErrorType.emptyResponse,
             ));
-          }          
+          }
           try {
             final pokemonResponse = PokemonResponse.fromJson(data);
             if (pokemonResponse.pokemon.isEmpty) {

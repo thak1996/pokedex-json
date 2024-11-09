@@ -34,12 +34,12 @@ class Stats {
 
   factory Stats.fromJson(Map<String, dynamic> json) {
     return Stats(
-      hp: json['hp'] as int,
-      attack: json['attack'] as int,
-      defense: json['defense'] as int,
-      specialAttack: json['special_attack'] as int,
-      specialDefense: json['special_defense'] as int,
-      speed: json['speed'] as int,
+      hp: json['hp'] as int? ?? 0,
+      attack: json['attack'] as int? ?? 0,
+      defense: json['defense'] as int? ?? 0,
+      specialAttack: json['special-attack'] as int? ?? 0,
+      specialDefense: json['special-defense'] as int? ?? 0,
+      speed: json['speed'] as int? ?? 0,
     );
   }
 
@@ -55,8 +55,8 @@ class Stats {
       'hp': hp,
       'attack': attack,
       'defense': defense,
-      'special_attack': specialAttack,
-      'special_defense': specialDefense,
+      'special-attack': specialAttack,
+      'special-defense': specialDefense,
       'speed': speed,
     };
   }
@@ -109,11 +109,11 @@ class Pokemon {
     required this.spawnChance,
     required this.avgSpawns,
     required this.spawnTime,
-    this.multipliers,
     required this.weaknesses,
+    required this.stats,
+    this.multipliers,
     this.prevEvolution,
     this.nextEvolution,
-    required this.stats,
   });
 
   final int id;
