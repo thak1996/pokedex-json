@@ -65,7 +65,7 @@ Para começar a usar este projeto, siga os passos abaixo:
 
 ## Autor
 
-**Franklyn Viana dos Santos** - [Seu GitHub](https://github.com/thak1996)
+**Franklyn Viana dos Santos** - [linkedin]([https://github.com/thak1996](https://www.linkedin.com/in/franklyn-v-santos/))
 
 ## Contribuições
 
